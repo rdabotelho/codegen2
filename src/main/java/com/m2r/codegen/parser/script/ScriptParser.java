@@ -134,6 +134,7 @@ public class ScriptParser extends Parser<DomainList> {
 		for (Domain domain : result.getDomains()) {
 			domain.finallyProcess();
 		}
+		result.finallyProcess();
 	}
 
 	private String extractString(String value) {
