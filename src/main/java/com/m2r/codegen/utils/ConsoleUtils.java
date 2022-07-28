@@ -19,7 +19,7 @@ public class ConsoleUtils {
     }
 
     public static void printUninitializedError() {
-        printError("Codegen project uninitialized!\nUse: codegen init");
+        printError("Codegen project uninitialized!\nUse: codegen.sh init");
     }
 
     public static String printAndReadOption(String msg) {

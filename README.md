@@ -7,7 +7,7 @@ Through its own DSL (domain-specific language) the codegen generates the artifac
 
 Unlike other code generators on the market, codegen 2.0 templates do not present "polluted code", as it separates the source file from the generation logic.
 
-Here is an example of a java class template using the velocity library:
+Here is an example of a java class template using the velocity engine:
 
 ```groovy
 package com.m2r.codegen;
@@ -89,29 +89,62 @@ template {
 
 ## Installation
 
+To install codegen 2.0, you need to download the binary file here and follow the steps below (for each OS).
+
+### macOS / Linux
+
+1. Extract the gencode zip file into a directory of your preference.
+2. Give execution permission to the `codegen.sh` file.
+```shell
+chmod +x /<gencode-dir>/codegen.sh
+```
+3. Create a symbolic file for the `codegen.sh` file
+```shell
+    ln -s /<gencode-dir>/codegen.sh /<gencode-dir>/codegen
+```
+4. Add gencode directory to the OS path.
+```shell
+    # macOS example
+    su
+    echo "/<gencode-dir>/codegen" >> /etc/paths
+```
+5. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
+```shell
+Codegen command line interface (CLI)
+Version: 2.0.0
+```
+
+### Windows
+
+1. Extract the gencode zip file into a directory of your preference.
+2. Add gencode directory to the OS path (Environment variable -> User variables -> Path).
+3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
+```shell
+Codegen command line interface (CLI)
+Version: 2.0.0
+```
+
 ## Usage
 
 To use codegen, we need to initialize it from within our project, using the following command:
 
 ```bash
-codegen init
+codegen.sh init
 ```
 
 If you prefer, we can clone the initial structure of a git repository, so we can reuse other templates already created.
 
 ```bash
-codegen init https://github.com/rdabotelho/mytemplates.git
+codegen.sh init https://github.com/rdabotelho/mytemplates.git
 ```
 
 After initialized, we can see, inside our project, the following structure created.
 
 ```bash
-- .codegen
-  - base
+- .codegen.sh
   - modeling
   - templates
 ```
-- **base:** Folder for static files.
 - **modeling:** Folder for models files (with own DSL).
 - **templates:** Folder for the template files and definition files (with own DSL).
 
@@ -120,14 +153,14 @@ To create a template run the following command: `codegen create-template <FILE-N
 
 Example:
 ```bash
-codegen create-template entity.java
+codegen.sh create-template entity.java
 ```
 
 See that two files were created in the folder `.codegen/templates`.
 - **entity.df:** Template definition (with generation logic).
 - **entity.java:** Template (without generation logic).
 
-**Note:** Both files are created with sample code that generates a class in Java. To ignore this example code, just erase and implement your own code.
+>**Note:** Both files are created with sample code that generates a class in Java. To ignore this example code, just erase and implement your own code.
 
 ### Create a modeling file
 
@@ -137,13 +170,19 @@ To create a modeling file, run the following command: `codegen create-model <FIL
 
 Example:
 ```bash
-codegen create-model entity.md
+codegen.sh create-model entity.md
 ```
 
 See that one file was created in the folder `.codegen/modeling`.
 - **entity.md:** Modeling file (domain model).
 
-**Note:** The modeling file is created with a sample code of a hello world entity. To ignore this example code, just erase and implement your own code.
+```groovy
+entity HelloWorld {
+	String message
+}
+```
+
+>**Note:** The modeling file is created with a sample code of a hello world entity. To ignore this example code, just erase and implement your own code.
 
 ### Code generation
 
@@ -153,7 +192,7 @@ To do code generation, use the following command: `codegen generate <MODELING-FI
 
 Example (if you haven't deleted the code generated in the previous examples):
 ```bash
-codegen generate entity.md
+codegen.sh generate entity.md
 ```
 
 See that one file was created in the folder `src/main/java/com/m2r/example/entity`.
@@ -177,11 +216,11 @@ public class HelloWorld {
 
 The following is a list of the commands available in the codegen CLI.
 
-| Command             | Description                                              | Parameters                                                                       |
-|---------------------|----------------------------------------------------------|----------------------------------------------------------------------------------|
-| **init**            | Initialize a codegen project                             | - git url (optional)<br/>- git branch (optional)                                 |
-| **create-template** | Create a new template file                               | - template file name                                                             |
-| **create-model**    | Generate files based on templates                        | - model file name                                                                |
-| **generate**        | Create a new template file                               | - model file name<br/>- force override (optional)                                |
-| **shift**           | Shift blocks automatically in template definition files  | - template definition file name<br/>- started line<br/>- total of lines to shift |
+| Command             | Description                                             | Parameters                                                                       |
+|---------------------|---------------------------------------------------------|----------------------------------------------------------------------------------|
+| **init**            | Initialize a codegen project                            | - git url (optional)<br/>- git branch (optional)                                 |
+| **create-template** | Create a new template file                              | - template file name                                                             |
+| **create-model**    | Create a new modeling file                              | - model file name                                                                |
+| **generate**        | Generate files based on templates                       | - model file name<br/>- force override (optional)                                |
+| **shift**           | Shift blocks automatically in template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift |
 
