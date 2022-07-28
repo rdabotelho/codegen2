@@ -2,9 +2,9 @@ package com.m2r.codegen.command;
 
 import com.m2r.codegen.parser.el.ElContext;
 import com.m2r.codegen.parser.el.ElExpr;
-import com.m2r.codegen.parser.script.Domain;
-import com.m2r.codegen.parser.script.DomainList;
-import com.m2r.codegen.parser.script.ScriptParser;
+import com.m2r.codegen.parser.modeling.Domain;
+import com.m2r.codegen.parser.modeling.DomainList;
+import com.m2r.codegen.parser.modeling.ModelingParser;
 import com.m2r.codegen.parser.template.*;
 import com.m2r.codegen.parser.templatedef.BlockContent;
 import com.m2r.codegen.parser.templatedef.FileContent;
@@ -23,7 +23,8 @@ public class GenerateCommand implements Runnable {
     private String modelFile;
 
     @CommandLine.Option(names = {"-f", "--force"}, description = "Force override")
-    private String force = null;
+    boolean force;
+
     @Override
     public void run() {
         if (!DirFileUtils.CODEGEN_DIR.exists()) {
@@ -56,7 +57,7 @@ public class GenerateCommand implements Runnable {
 
     private DomainList parseScript(String fileName) throws Exception {
         Reader reader = new FileReader(new File(DirFileUtils.getScritsDir(), fileName));
-        return ScriptParser.parse(reader);
+        return ModelingParser.parse(reader);
     }
 
     private Template parseTemplate(String fileName) throws Exception {
@@ -76,7 +77,6 @@ public class GenerateCommand implements Runnable {
         Attribute targetFile = template.getAttributeByName("targetFile");
         if (targetFile == null)
             throw new RuntimeException("targetFile attribute required!");
-        boolean canForce = this.force != null;
 
         for (Domain domain : domainList.getDomains()) {
             if (!template.consider(domain.getType().toString())) {
@@ -91,7 +91,7 @@ public class GenerateCommand implements Runnable {
             contentFile.setContext(context);
 
             File file = new File(DirFileUtils.HOME_DIR,  ElExpr.resolve(context, targetFile.getValue()));
-            if (file.exists() && !canForce) {
+            if (file.exists() && !force) {
                 String option = ConsoleUtils.printAndReadOption("Override '" + file.getName() + "' file (N/y): ");
                 if (!option.equalsIgnoreCase("y")) {
                     continue;

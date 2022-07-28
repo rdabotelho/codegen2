@@ -1,4 +1,4 @@
-package com.m2r.codegen.parser.script;
+package com.m2r.codegen.parser.modeling;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -132,7 +132,7 @@ public class DomainAttribute {
         return hasTypeDomain() && getTypeDomain().isEnum();
     }
 
-    public boolean isModel() {
+    public boolean isEntity() {
         return hasTypeDomain() && !getTypeDomain().isEnum() && !isList();
     }
 
@@ -211,7 +211,7 @@ public class DomainAttribute {
         return isString();
     }
 
-    public boolean isModelInput() {
+    public boolean isEntityInput() {
         return hasTypeDomain() && getTypeDomain().isClass();
     }
 
@@ -316,7 +316,7 @@ public class DomainAttribute {
     public StringWrapper getInput() {
         StringWrapper input = getParam("input").getValue("");
         if (input.getValue().equals("")) {
-            if (isListInput() || isModel()) {
+            if (isListInput() || isEntity()) {
                 input.setValue("select-eager");
             }
             else if (isEnum()) {

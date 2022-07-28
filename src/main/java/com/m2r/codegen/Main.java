@@ -8,7 +8,7 @@ import picocli.CommandLine;
     subcommands = {
             InitCommand.class,
             CreateTemplateCommand.class,
-            CreateScriptCommand.class,
+            CreateModelCommand.class,
             GenerateCommand.class,
             ShiftCommand.class
     }
@@ -24,7 +24,7 @@ public class Main implements Runnable {
         ConsoleUtils.println("Use:");
         ConsoleUtils.println("\t- init: Initialize a codegen project");
         ConsoleUtils.println("\t- create-template: Create a new template file");
-        ConsoleUtils.println("\t- create-script: Create a new script file");
+        ConsoleUtils.println("\t- create-model: Create a new model file");
         ConsoleUtils.println("\t- generate: Generate files");
         ConsoleUtils.println("\t- shift: Shift blocks automatically");
     }

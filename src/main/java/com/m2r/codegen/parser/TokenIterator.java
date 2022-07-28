@@ -1,6 +1,6 @@
 package com.m2r.codegen.parser;
 
-import com.m2r.codegen.parser.script.StringWrapper;
+import com.m2r.codegen.parser.modeling.StringWrapper;
 import com.m2r.easyparser.Parser;
 
 import java.util.List;

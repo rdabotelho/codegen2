@@ -1,4 +1,4 @@
-package com.m2r.codegen.parser.script;
+package com.m2r.codegen.parser.modeling;
 
 public class StringWrapper {
 

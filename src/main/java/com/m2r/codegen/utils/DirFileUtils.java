@@ -13,7 +13,7 @@ public class DirFileUtils {
     }
 
     public static File getScritsDir() {
-        return new File(CODEGEN_DIR, "scripts");
+        return new File(CODEGEN_DIR, "modeling");
     }
 
     public static File getTemplatesDir() {

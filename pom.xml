@@ -81,7 +81,7 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.8.2</version>
 				<configuration>
-					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/codegen-cli</altDeploymentRepository>
+					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/codegen</altDeploymentRepository>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -91,8 +91,8 @@
 				<configuration>
 					<message>Maven artifacts for ${project.version}</message>
 					<noJekyll>true</noJekyll>
-					<outputDirectory>${project.build.directory}/codegen-cli</outputDirectory>
-					<branch>refs/heads/codegen-cli</branch>
+					<outputDirectory>${project.build.directory}/codegen</outputDirectory>
+					<branch>refs/heads/codegen</branch>
 					<includes><include>**/*</include></includes>
 					<repositoryName>mvn-repo</repositoryName>
 					<repositoryOwner>rdabotelho</repositoryOwner>

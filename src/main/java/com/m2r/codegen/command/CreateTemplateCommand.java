@@ -18,8 +18,8 @@ public class CreateTemplateCommand implements Runnable {
             return;
         }
 
-        DirFileUtils.createFile(DirFileUtils.getTemplatesDir(), name, "package com.m2r.example.model;\n\n" +
-            "public class Model {\n" +
+        DirFileUtils.createFile(DirFileUtils.getTemplatesDir(), name, "package com.m2r.example.entity;\n\n" +
+            "public class Entity {\n" +
             "\tprivate String name;\n" +
             "\tpublic String getName() {\n" +
             "\t\treturn this.name;\n" +
@@ -32,11 +32,11 @@ public class CreateTemplateCommand implements Runnable {
 
         name = FilenameUtils.getBaseName(name) + ".df";
         DirFileUtils.createFile(DirFileUtils.getTemplatesDir(), name, "template {\n" +
-            "\tsourceFile: 'model.java'\n" +
-            "\ttargetFile: 'src/main/java/com/m2r/example/model/${domain.name}.java'\n" +
-            "\tconsider: 'model'\n" +
+            "\tsourceFile: 'entity.java'\n" +
+            "\ttargetFile: 'src/main/java/com/m2r/example/entity/${domain.name}.java'\n" +
+            "\tconsider: 'entity'\n" +
             "\tblock(3, 3) {\n" +
-            "\t\treplace('Model', domain.name)\n" +
+            "\t\treplace('Entity', domain.name)\n" +
             "\t}\n" +
             "\tblock(4, 4) {\n" +
             "\t\titerate(domain.attributes, item) {\n" +

@@ -1,4 +1,4 @@
-package com.m2r.codegen.parser.script;
+package com.m2r.codegen.parser.modeling;
 
 import java.util.ArrayList;
 import java.util.List;

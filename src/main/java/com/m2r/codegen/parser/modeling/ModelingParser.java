@@ -1,4 +1,4 @@
-package com.m2r.codegen.parser.script;
+package com.m2r.codegen.parser.modeling;
 
 import com.m2r.codegen.parser.TokenIterator;
 import com.m2r.easyparser.Parser;
@@ -6,7 +6,7 @@ import com.m2r.easyparser.ParserException;
 import java.io.Reader;
 import java.util.regex.Pattern;
 
-public class ScriptParser extends Parser<DomainList> {
+public class ModelingParser extends Parser<DomainList> {
 
 	static private enum TokenType implements ITokenType {
 		
@@ -27,12 +27,12 @@ public class ScriptParser extends Parser<DomainList> {
 		
 	}
 
-	public ScriptParser() {
+	public ModelingParser() {
 		super(true);
 	}
 
 	public static DomainList parse(Reader reader) throws ParserException {
-		ScriptParser me = new ScriptParser();
+		ModelingParser me = new ModelingParser();
 		return me.execute(reader);
 	}
 	
@@ -147,7 +147,7 @@ public class ScriptParser extends Parser<DomainList> {
 	 *
 	 * DOMAIN_LIST		-> <DOMAIN> <DOMAIN_LIST> | <DOMAIN>
 	 * DOMAIN			-> MODEL | ENUM
-	 * MODEL			-> model <PID> { <ATTRIBUTES_LIST> } | model <PID> {  }
+	 * MODEL			-> entity <PID> { <ATTRIBUTES_LIST> } | entity <PID> {  }
 	 * ENUM				-> enum <PID> { <PID_LIST> }
 	 * PID_LIST			-> <PID> <PID_LIST> | <PID>
 	 * PID				-> ID ( <PARAMS_LIST> ) | ID
@@ -178,14 +178,14 @@ public class ScriptParser extends Parser<DomainList> {
 
 	protected boolean domain() {
 		int start = pos;
-		return (model() || reset(start)) ||
+		return (entity() || reset(start)) ||
 				(enumeration() || reset(start));
 	}
 
-	protected boolean model() {
+	protected boolean entity() {
 		int start = pos;
-		return ((term(TokenType.ID, "model") && pid() && term(TokenType.DELIMITER, "{") && attributesList() && term(TokenType.DELIMITER, "}")) || reset(start)) ||
-				((term(TokenType.ID, "model") && pid() && term(TokenType.DELIMITER, "{") && term(TokenType.DELIMITER, "}")) || reset(start));
+		return ((term(TokenType.ID, "entity") && pid() && term(TokenType.DELIMITER, "{") && attributesList() && term(TokenType.DELIMITER, "}")) || reset(start)) ||
+				((term(TokenType.ID, "entity") && pid() && term(TokenType.DELIMITER, "{") && term(TokenType.DELIMITER, "}")) || reset(start));
 	}
 
 	protected boolean enumeration() {
