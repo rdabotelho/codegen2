@@ -175,3 +175,13 @@ public class HelloWorld {
 
 ### Codegen CLI commands
 
+The following is a list of the commands available in the codegen CLI.
+
+| Command             | Description                                              | Parameters                                                                       |
+|---------------------|----------------------------------------------------------|----------------------------------------------------------------------------------|
+| **init**            | Initialize a codegen project                             | - git url (optional)<br/>- git branch (optional)                                 |
+| **create-template** | Create a new template file                               | - template file name                                                             |
+| **create-model**    | Generate files based on templates                        | - model file name                                                                |
+| **generate**        | Create a new template file                               | - model file name<br/>- force override (optional)                                |
+| **shift**           | Shift blocks automatically in template definition files  | - template definition file name<br/>- started line<br/>- total of lines to shift |
+
