@@ -182,7 +182,20 @@ public class DomainAttribute {
     }
 
     public boolean isBasicType() {
-        return isString() || isInteger() || isLong() || isFloat() || isDouble() || isBoolean() || isBigDecimal() || isLocalDate() || isLocalDateTime();
+        return isString() || isNumber() || isInteger() || isLong() || isFloat() || isDouble() || isBoolean() ||
+                isBigDecimal() || isLocalDate() || isLocalDateTime() || isDate() || isDateTime();
+    }
+
+    public boolean isNumber() {
+        return "Number".equalsIgnoreCase(type.toString());
+    }
+
+    public boolean isDate() {
+        return "Date".equalsIgnoreCase(type.toString());
+    }
+
+    public boolean isDateTime() {
+        return "DateTime".equalsIgnoreCase(type.toString());
     }
 
     /* Tipo de entradas conforme o tipo de atributo */
