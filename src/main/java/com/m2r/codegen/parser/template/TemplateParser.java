@@ -20,7 +20,7 @@ public class TemplateParser extends Parser<Template> {
         STRING("'(.*?)'"),
         INTEGER("\\d+"),
         FLOAT("\\d+\\.\\d+"),
-        BOOOLEAN("boolean"),
+        BOOLEAN("boolean"),
         SPACE("\\s");
 
         private Pattern regex;
@@ -86,11 +86,12 @@ public class TemplateParser extends Parser<Template> {
         method.setPos(tokens.getLast().getPos());
         if (tokens.nextEqual("(")) {
             while (tokens.getLast() != null && !tokens.lastEqual(")")) {
-                String param = tokens.nextAsString();
-                if (param.equals(",")) {
-                    param = tokens.nextAsString();
+                Token param = tokens.next();
+                if (param.toString().equals(",")) {
+                    param = tokens.next();
                 }
-                method.getParameters().add(extractString(param));
+                String paramValue = extractString(param.getValue());
+                method.getParameters().add(new Param(paramValue, param.getType() != TokenType.STRING));
                 tokens.next();
             }
             tokens.next();
@@ -138,21 +139,21 @@ public class TemplateParser extends Parser<Template> {
             if (method.getParameters().size() < 2) {
                 throw new ParserException("Block method required 2 parameter (lineStart and lineEnd)", method.getPos());
             }
-            if (!method.getParameters().get(0).matches("\\d+")) {
+            if (!method.getParameters().get(0).getValue().matches("\\d+")) {
                 throw new ParserException("Parameter lineStart must be integer", method.getPos());
             }
-            if (!method.getParameters().get(1).matches("\\d+")) {
+            if (!method.getParameters().get(1).getValue().matches("\\d+")) {
                 throw new ParserException("Parameter lineEnd must be integer", method.getPos());
             }
         }
         result.getMethods().sort((a,b) -> {
-            Integer num1 = Integer.parseInt(a.getParameters().get(0));
-            Integer num2 = Integer.parseInt(b.getParameters().get(0));
+            Integer num1 = Integer.parseInt(a.getParameters().get(0).getValue());
+            Integer num2 = Integer.parseInt(b.getParameters().get(0).getValue());
             return num1.compareTo(num2);
         });
         int currentLine = 0;
         for (Method method : result.getMethods()) {
-            Integer line = Integer.parseInt(method.getParameters().get(0));
+            Integer line = Integer.parseInt(method.getParameters().get(0).getValue());
             if (line <= currentLine) {
                 throw new ParserException("Can't be there no overlapping lines in the blocks", method.getPos());
             }
@@ -239,7 +240,7 @@ public class TemplateParser extends Parser<Template> {
         return ((term(TokenType.STRING)) || reset(start)) ||
                 ((term(TokenType.INTEGER)) || reset(start)) ||
                 ((term(TokenType.FLOAT)) || reset(start)) ||
-                ((term(TokenType.BOOOLEAN)) || reset(start));
+                ((term(TokenType.BOOLEAN)) || reset(start));
     }
 
     private boolean flag(int pos, int flag) {

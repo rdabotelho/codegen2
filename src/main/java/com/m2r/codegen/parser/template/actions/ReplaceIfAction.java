@@ -1,7 +1,7 @@
 package com.m2r.codegen.parser.template.actions;
 
-import com.m2r.codegen.parser.el.ElExpr;
 import com.m2r.codegen.parser.template.Method;
+import com.m2r.codegen.parser.template.Param;
 import com.m2r.codegen.parser.templatedef.BlockContent;
 
 public class ReplaceIfAction implements MethodAction {
@@ -16,14 +16,13 @@ public class ReplaceIfAction implements MethodAction {
     @Override
     public void process(BlockContent block, Method method, StringBuilder content) throws Exception {
         validate(method);
-        String oldText = method.getParameters().get(0);
-        String newText = ElExpr.stringToObject(method.getContext(), method.getParameters().get(1), "").toString();
+        String oldText = method.getParameters().get(0).resolveValueToString(method.getContext(),"");
+        String newText = method.getParameters().get(1).resolveValueToString(method.getContext(),"");
 
-        String valueParam = method.getParameters().get(3);
-        method.getContext().put("param1", valueParam);
-        String methodParam = ElExpr.stringToObject(method.getContext(), method.getParameters().get(2), "").toString();
+        Param valueParam = method.getParameters().get(3);
+        method.getContext().put("param1", valueParam.getValue());
 
-        boolean show = Boolean.valueOf(ElExpr.stringToObject(method.getContext(), methodParam, "false").toString());
+        boolean show = method.getParameters().get(2).resolveValueToBoolean(method.getContext(), false);
 
         if (show) {
             String line = content.toString();

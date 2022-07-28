@@ -1,6 +1,5 @@
 package com.m2r.codegen.parser.template.actions;
 
-import com.m2r.codegen.parser.el.ElExpr;
 import com.m2r.codegen.parser.template.DefinedMethod;
 import com.m2r.codegen.parser.template.Method;
 import com.m2r.codegen.parser.templatedef.BlockContent;
@@ -18,9 +17,9 @@ public class NoIteratorAction implements MethodAction {
             boolean show = true;
 
             if (subMethod.getName().equals(DefinedMethod.SHOW_IF.getName())) {
-                method.getContext().put("param1", subMethod.getParameter(1, null));
-                method.getContext().put("param2", subMethod.getParameter(2, null));
-                show = Boolean.valueOf(ElExpr.stringToObject(method.getContext(), subMethod.getParameter(0), "false").toString());
+                method.getContext().put("param1", subMethod.getParameter(1, null).getValue());
+                method.getContext().put("param2", subMethod.getParameter(2, null).getValue());
+                show = subMethod.getParameter(0).resolveValueToBoolean(method.getContext(), false);
             }
 
             if (show) {

@@ -3,6 +3,7 @@ package com.m2r.codegen.parser.template.actions;
 import com.m2r.codegen.parser.el.ElExpr;
 import com.m2r.codegen.parser.template.DefinedMethod;
 import com.m2r.codegen.parser.template.Method;
+import com.m2r.codegen.parser.template.Param;
 import com.m2r.codegen.parser.templatedef.BlockContent;
 
 import java.util.List;
@@ -19,15 +20,15 @@ public class IterateAction implements MethodAction {
     @Override
     public void process(BlockContent block, Method method, StringBuilder content) throws Exception {
         validate(method);
-        String iteratorExpr = method.getParameters().get(0);
-        String itemVar = method.getParameters().get(1);
+        Param iteratorExpr = method.getParameters().get(0);
+        Param itemVar = method.getParameters().get(1);
 
-        List<?> list = (List<?>) ElExpr.stringToObject(block.getContext(), iteratorExpr);
+        List<?> list = (List<?>) ElExpr.stringToObject(block.getContext(), iteratorExpr.getValue());
         if (list != null) {
             method.getContext().inheritContext(block.getContext());
             for (int i=0; i<list.size(); i++) {
                 Object item = list.get(i);
-                method.getContext().put(itemVar, item);
+                method.getContext().put(itemVar.getValue(), item);
                 MethodAction action = new NoIteratorAction();
                 method.getContext().inheritContext(method.getContext());
 

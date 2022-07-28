@@ -26,7 +26,7 @@ public class Template {
     }
 
     public Method findMethodByParam(int index, String value) {
-        return getMethods().stream().filter(it -> it.getParameter(1, "").equals(value)).findFirst().orElse(null);
+        return getMethods().stream().filter(it -> it.getParameter(1, new Param()).equals(value)).findFirst().orElse(null);
     }
 
     public Attribute getAttributeByName(String name) {

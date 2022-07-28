@@ -8,7 +8,7 @@ import java.util.List;
 public class Method {
 
     private String name;
-    private List<String> parameters = new ArrayList<>();
+    private List<Param> parameters = new ArrayList<>();
     private List<Method> methods = new ArrayList<>();
     private ElContext context = new ElContext();
 
@@ -22,11 +22,11 @@ public class Method {
         this.name = name;
     }
 
-    public List<String> getParameters() {
+    public List<Param> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<String> parameters) {
+    public void setParameters(List<Param> parameters) {
         this.parameters = parameters;
     }
 
@@ -50,11 +50,11 @@ public class Method {
         this.pos = pos;
     }
 
-    public String getParameter(int index) {
+    public Param getParameter(int index) {
         return parameters.size() > index ? parameters.get(index) : null;
     }
 
-    public String getParameter(int index, String def) {
+    public Param getParameter(int index, Param def) {
         return parameters.size() > index ? parameters.get(index) : def;
     }
 

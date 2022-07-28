@@ -53,8 +53,8 @@ public class TemplateDefParser extends Parser<FileContent> {
         int currentLine = 1;
         result.getBlocks().clear();
         for (Method method : template.getMethods()) {
-            int startLine = Integer.parseInt(method.getParameters().get(0));
-            int endLine = Integer.parseInt(method.getParameters().get(1));
+            int startLine = Integer.parseInt(method.getParameters().get(0).getValue());
+            int endLine = Integer.parseInt(method.getParameters().get(1).getValue());
             if (currentLine < startLine) {
                 result.getBlocks().add(new BlockContent(currentLine, startLine - 1, null));
             }
