@@ -116,8 +116,8 @@
 						<configuration>
 							<target>
 								<mkdir dir="${project.build.directory}/bin"/>
-								<copy file="${basedir}/codegen.bat" todir="${project.build.directory}/bin" />
-								<copy file="${basedir}/codegen.sh" todir="${project.build.directory}/bin" />
+								<copy file="${basedir}/codegen.cmd" todir="${project.build.directory}/bin" />
+								<copy file="${basedir}/codegen.sh" tofile="${project.build.directory}/bin/codegen" />
 								<copy file="${project.build.directory}/codegen-2.0.0-SNAPSHOT-jar-with-dependencies.jar" tofile="${project.build.directory}/bin/codegen.jar" />
 							</target>
 						</configuration>

@@ -93,22 +93,17 @@ To install codegen 2.0, you need to download the binary file here and follow the
 
 ### macOS / Linux
 
-1. Extract the gencode zip file into a directory of your preference.
-2. Give execution permission to the `codegen.sh` file.
+1. Extract the gencode zip file into the home directory `~/`.
+2. Give execution permission to the `codegen` file.
 ```shell
-chmod +x /<gencode-dir>/codegen.sh
+chmod +x ~/codegen/codegen
 ```
-3. Create a symbolic file for the `codegen.sh` file
+3. Add gencode directory to the OS path.
 ```shell
-    ln -s /<gencode-dir>/codegen.sh /<gencode-dir>/codegen
+export PATH=$PATH:~/codegen
 ```
-4. Add gencode directory to the OS path.
-```shell
-    # macOS example
-    su
-    echo "/<gencode-dir>/codegen" >> /etc/paths
-```
-5. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
+>**Note:** It is important to include this script in an initialization file to keep the directory in the path.
+4. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
 Version: 2.0.0
@@ -116,7 +111,7 @@ Version: 2.0.0
 
 ### Windows
 
-1. Extract the gencode zip file into a directory of your preference.
+1. Extract the gencode zip file into the home directory `~/`.
 2. Add gencode directory to the OS path (Environment variable -> User variables -> Path).
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
