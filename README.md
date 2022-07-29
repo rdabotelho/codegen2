@@ -89,7 +89,7 @@ template {
 
 ## Installation
 
-To install codegen 2.0, you need to download the binary file here and follow the steps below (for each OS).
+To install codegen 2.0, you need to download the zip file (in the link of the latest release version of the project) and follow the steps below (for each OS).
 
 ### macOS / Linux
 
