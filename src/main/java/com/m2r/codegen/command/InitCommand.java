@@ -23,7 +23,7 @@ public class InitCommand implements Runnable {
             return;
         }
         if (!gitUrl.equals("")) {
-            File dest = new File(DirFileUtils.HOME_DIR, ".codegen.sh");
+            File dest = new File(DirFileUtils.HOME_DIR, ".codegen");
             TemplateRepo.cloneBranch(gitUrl, gitBranch, dest);
         }
         else {

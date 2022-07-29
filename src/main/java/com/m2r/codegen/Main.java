@@ -23,7 +23,7 @@ public class Main implements Runnable {
     @Override
     public void run() {
         ConsoleUtils.println("Use:");
-        ConsoleUtils.println("\t- init: Initialize a codegen.sh project");
+        ConsoleUtils.println("\t- init: Initialize a codegen project");
         ConsoleUtils.println("\t- create-template: Create a new template file");
         ConsoleUtils.println("\t- create-model: Create a new modeling file");
         ConsoleUtils.println("\t- generate: Generate files based on templates");
