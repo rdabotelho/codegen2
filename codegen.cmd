@@ -1,1 +1,2 @@
-java -jar codegen.jar %1 %2 %3
+@echo off
+java -jar %homepath%\codegen\codegen.jar %1 %2 %3

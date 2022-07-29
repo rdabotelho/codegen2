@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 public class DirFileUtils {
 
     public static File HOME_DIR = new File(System.getProperty("user.dir"));
-    public static File CODEGEN_DIR = new File(HOME_DIR, ".codegen.sh");
+    public static File CODEGEN_DIR = new File(HOME_DIR, ".codegen");
 
     public static File getScritsDir() {
         return new File(CODEGEN_DIR, "modeling");

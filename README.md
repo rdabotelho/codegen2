@@ -136,7 +136,7 @@ codegen init https://github.com/rdabotelho/mytemplates.git
 After initialized, we can see, inside your project, the following structure created.
 
 ```bash
-- .codegen.sh
+- .codegen
   - modeling
   - templates
 ```
