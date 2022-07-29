@@ -14,11 +14,11 @@ package com.m2r.codegen;
 
 class $domain.name {
 
-    #foreach( $attribute in $domain.attributes )
+#foreach( $attribute in $domain.attributes )
     private $attribute.type $attribute.name;
-    #end
+#end
 
-    #foreach( $attribute in $domain.attributes )
+#foreach( $attribute in $domain.attributes )
     public $attribute.type get${attribute.name.toPascalCase()}() {
         return $attribute.name;
     }
@@ -27,7 +27,7 @@ class $domain.name {
         this.$attribute.name = $attribute.name;
     }
 
-    #end
+#end
 }
 ```
 
@@ -89,7 +89,9 @@ template {
 
 ## Installation
 
-To install codegen 2.0, you need to download the zip file (in the link of the latest release version of the project) and follow the steps below (for each OS).
+To install codegen 2.0, you need to download the `codegen.zip` file in the link below and follow the next steps (for each OS).
+
+[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.0.0)
 
 ### macOS / Linux
 
@@ -197,13 +199,13 @@ See that one file was created in the folder `src/main/java/com/m2r/example/entit
 package com.m2r.example.entity;
 
 public class HelloWorld {
-    private String message;
-    public String getMessage() {
-        return this.message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	private String message;
+	public String getMessage() {
+		return this.message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }
 ```
 
