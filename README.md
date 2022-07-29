@@ -14,11 +14,11 @@ package com.m2r.codegen;
 
 class $domain.name {
 
-#foreach( $attribute in $domain.attributes )
+    #foreach( $attribute in $domain.attributes )
     private $attribute.type $attribute.name;
-#end
+    #end
 
-#foreach( $attribute in $domain.attributes )
+    #foreach( $attribute in $domain.attributes )
     public $attribute.type get${attribute.name.toPascalCase()}() {
         return $attribute.name;
     }
@@ -27,7 +27,7 @@ class $domain.name {
         this.$attribute.name = $attribute.name;
     }
 
-#end
+    #end
 }
 ```
 
@@ -121,19 +121,19 @@ Version: 2.0.0
 
 ## Usage
 
-To use codegen, we need to initialize it from within our project, using the following command:
+To use codegen, we need to initialize it from within your project, using the following command:
 
 ```bash
-codegen.sh init
+codegen init
 ```
 
 If you prefer, we can clone the initial structure of a git repository, so we can reuse other templates already created.
 
 ```bash
-codegen.sh init https://github.com/rdabotelho/mytemplates.git
+codegen init https://github.com/rdabotelho/mytemplates.git
 ```
 
-After initialized, we can see, inside our project, the following structure created.
+After initialized, we can see, inside your project, the following structure created.
 
 ```bash
 - .codegen.sh
@@ -148,7 +148,7 @@ To create a template run the following command: `codegen create-template <FILE-N
 
 Example:
 ```bash
-codegen.sh create-template entity.java
+codegen create-template entity.java
 ```
 
 See that two files were created in the folder `.codegen/templates`.
@@ -165,7 +165,7 @@ To create a modeling file, run the following command: `codegen create-model <FIL
 
 Example:
 ```bash
-codegen.sh create-model entity.md
+codegen create-model entity.md
 ```
 
 See that one file was created in the folder `.codegen/modeling`.
@@ -187,7 +187,7 @@ To do code generation, use the following command: `codegen generate <MODELING-FI
 
 Example (if you haven't deleted the code generated in the previous examples):
 ```bash
-codegen.sh generate entity.md
+codegen generate entity.md
 ```
 
 See that one file was created in the folder `src/main/java/com/m2r/example/entity`.
@@ -197,13 +197,13 @@ See that one file was created in the folder `src/main/java/com/m2r/example/entit
 package com.m2r.example.entity;
 
 public class HelloWorld {
-	private String message;
-	public String getMessage() {
-		return this.message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    private String message;
+    public String getMessage() {
+        return this.message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
 ```
 
