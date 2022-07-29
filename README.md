@@ -89,7 +89,9 @@ template {
 
 ## Installation
 
-To install codegen 2.0, you need to download the zip file (in the link of the latest release version of the project) and follow the steps below (for each OS).
+To install codegen 2.0, you need to download the `codegen.zip` file in the link below and follow the next steps (for each OS).
+
+[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.0.0)
 
 ### macOS / Linux
 
