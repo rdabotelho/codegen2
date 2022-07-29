@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar ~/codegen/bin/codegen.jar $1 $2 $3
+java -jar ~/codegen/codegen.jar $1 $2 $3

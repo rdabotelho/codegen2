@@ -5,7 +5,7 @@
 
 	<groupId>com.m2r</groupId>
 	<artifactId>codegen</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>codegen</name>
@@ -118,7 +118,7 @@
 								<mkdir dir="${project.build.directory}/bin"/>
 								<copy file="${basedir}/codegen.cmd" todir="${project.build.directory}/codegen" />
 								<copy file="${basedir}/codegen.sh" tofile="${project.build.directory}/codegen/codegen" />
-								<copy file="${project.build.directory}/codegen-2.0.0-jar-with-dependencies.jar" tofile="${project.build.directory}/codegen/codegen.jar" />
+								<copy file="${project.build.directory}/codegen-2.0.1-SNAPSHOT-jar-with-dependencies.jar" tofile="${project.build.directory}/codegen/codegen.jar" />
 							</target>
 						</configuration>
 						<goals>
