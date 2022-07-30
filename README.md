@@ -39,11 +39,11 @@ package com.m2r.codegen;
 class Entity {
 
     private String name;
-
+    
     public String getName() {
         return this.name;
     }
-
+    
     public void setNam(String name) {
         this.name = name;
     }
@@ -175,7 +175,7 @@ See that one file was created in the folder `.codegen/modeling`.
 
 ```groovy
 entity HelloWorld {
-	String message
+    String message
 }
 ```
 
@@ -199,13 +199,13 @@ See that one file was created in the folder `src/main/java/com/m2r/example/entit
 package com.m2r.example.entity;
 
 public class HelloWorld {
-	private String message;
-	public String getMessage() {
-		return this.message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    private String message;
+    public String getMessage() {
+        return this.message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
 }
 ```
 
@@ -221,3 +221,94 @@ The following is a list of the commands available in the codegen CLI.
 | **generate**        | Generate files based on templates                       | - model file name<br/>- force override (optional)                                |
 | **shift**           | Shift blocks automatically in template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift |
 
+## Codegen 2.0 Engine
+
+For the generation of the final file, gencode has an engine that implements two processes:
+1. **Modelling file processing:** Receives the modeling file and transforms it into metadata with the user-defined model.
+2. **Template definition file processing:** In addition to the metadata from the previous processing, it also receives the original template file and the file with the definition of how the template content will be generated.
+
+![codegen-engine](codegen-engine.png)
+
+## Modelling File
+
+The modeling file is the artifact where the user models its domain, which will be the input for the modelling file processing.
+
+### DSL of Modelling File
+
+To implement the modelling file, the codegen provides its own domain-specific language (DSL) where the user structure its entities, enumeration and relationships, which will be used to make the template definition file.
+
+### DSL Syntax
+
+```bash
+entity EntityName {
+    String attribute1
+    Integer attribute2 (param1: 'value')
+    Boolean attribute3 (param1: 'value', param2: 'value')
+    List<OtherEntity> attribute4 (param1: 'value', param2: 'value',...)
+    :
+}
+
+entity OtherEntity (param1: 'value', param2: 'value',...) {
+    String attribute1
+    Date attribute2
+    EnumName attribute3
+    :
+}
+
+enum EnumName {
+    ENUM_VALUE1
+    ENUM_VALUE2
+    ENUM_VALUE3
+    :
+}
+```
+
+### Modelling Metadata
+
+The result of modelling file processing is the modelling metadata, that will be one of the entries of the template definition file processing.
+
+This metadata is presented in the following diagram.
+
+![domain diagram](domain.png)
+
+### StringWrapper Class
+
+For all string values, codegen provides an helper class, called `StringWrapper`, that assist in the treatment of string values in the template definition file coding.
+
+![string wrapper diagram](string-wrapper.png)
+
+## Template Definition File
+
+The template definition file is the artifact that guides the generation of the final file. It receives the modelling metadata, resulted of processing the modeling file processing, and replaces in the code blocks of original template file.
+
+### DSL of Template Definition File
+
+To create the template definition file, the codegen provides its own DSL where the user structure its blocks and functions to the target file generation.
+
+### DSL Syntax
+
+```bash
+template {
+    sourceFile: 'template-file-name'
+    targetFile: 'target-file-name'
+    consider: 'domain-type'
+    block(start-line, end-line) {
+        replace('old-value', new-value)
+        showIf(object, method, param1, param2, ...)
+        delimiter('prefix', 'divider', 'suffix')
+        :
+    }
+    block(start-line, end-line) {
+        iterate(list, item-name) {
+            replace('old-value', new-value)
+            replaceIf('old-value', new-value, object-method, param1, param2, ...)
+            :
+        }
+    }
+    :
+}
+```
+
+### Generated file 
+
+The result of template definition file is the expected target file.
