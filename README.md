@@ -281,6 +281,8 @@ For all string values, codegen provides an helper class, called `StringWrapper`,
 
 The template definition file is the artifact that guides the generation of the final file. It receives the modelling metadata, resulted of processing the modeling file processing, and replaces in the code blocks of original template file.
 
+![template definition file](template-file.png)
+
 ### DSL of Template Definition File
 
 To create the template definition file, the codegen provides its own DSL where the user structure its blocks and functions to the target file generation.
@@ -311,4 +313,15 @@ template {
 
 ### Generated file 
 
-The result of template definition file is the expected target file.
+The result of template definition file processing, is the generated file expected.
+
+Below, we present an example of a file generated from the example of the previous diagram.
+
+```groovy
+class User {
+    id: number
+    name: String
+    login: String
+    password: String
+}
+```
