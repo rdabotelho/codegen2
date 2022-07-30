@@ -29,6 +29,7 @@ public class InitCommand implements Runnable {
         else {
             DirFileUtils.getScritsDir().mkdirs();
             DirFileUtils.getTemplatesDir().mkdirs();
+            DirFileUtils.createFile(DirFileUtils.CODEGEN_DIR, "config.properties", "PROJECT_NAME=HelloWorld");
         }
         ConsoleUtils.printSuccess("Codegen project initialized!");
     }

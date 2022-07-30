@@ -15,6 +15,7 @@ import picocli.CommandLine;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @CommandLine.Command(name = "generate")
 public class GenerateCommand implements Runnable {
@@ -88,6 +89,11 @@ public class GenerateCommand implements Runnable {
 
             File templateFile = new File(DirFileUtils.getTemplatesDir(), ElExpr.resolve(context, sourceFile.getValue()));
             FileContent contentFile = parseTemplateDef(template, templateFile);
+
+            File configFile = new File(DirFileUtils.CODEGEN_DIR, "config.properties");
+            Properties configProperties = new Properties();
+            configProperties.load(new FileInputStream(configFile));
+            configProperties.forEach((key, value) -> context.put(key.toString(), value));
             contentFile.setContext(context);
 
             File file = new File(DirFileUtils.HOME_DIR,  ElExpr.resolve(context, targetFile.getValue()));
