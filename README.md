@@ -314,3 +314,14 @@ template {
 ### Generated file 
 
 The result of template definition file processing, is the generated file expected.
+
+Below, we present an example of a file generated from the example of the previous diagram.
+
+```groovy
+class User {
+    id: number
+    name: String
+    login: String
+    password: String
+}
+```
