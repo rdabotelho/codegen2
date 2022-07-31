@@ -139,8 +139,8 @@ After initialized, we can see, inside your project, the following structure crea
 
 ```bash
 - .codegen
-  - modeling
-  - templates
+  + modeling
+  + templates
 ```
 - **modeling:** Folder for models files (with own DSL).
 - **templates:** Folder for the template files and definition files (with own DSL).
@@ -325,3 +325,143 @@ class User {
     password: String
 }
 ```
+
+## Practical case
+
+To present in a practical way the main benefits of gencode 2.0, let's create a microservice in Spring Boot and do all the model class generation, enumeration, repository and REST resource.
+
+The purpose of our microservice is to expose a customer entity REST API and persist its data in an H2 database.
+
+### Spring Initializer
+
+To get started, go to site [Spring Initializer](https://start.spring.io/), and create a microservice project with the following characteristics:
+
+- **Project:** Maven Project
+- **Language:** Java
+- **Spring Boot:** 2.7.2
+- **Java Version:** 8 (tested)
+- **Dependencies:**
+  - Spring Web
+  - Spring Data JPA
+  - H2 Database
+
+### Codegen initialization
+
+After opening the project in an IDE of your preference and with the [codegen installed](##Installtion), run the startup command.
+
+```bash
+codegen init https://github.com/rdabotelho/codegen-templates.git
+```
+
+>**Note:** To speed up the process, we used the templates already created for this example in the repository `codegen-templates.git`. After initialization, feel free to make improvements.
+
+After initialization, we can see the template files for `entity`, `enum`, `repository` and `resource`.
+
+```bash
+- .codegen
+  + modeling
+  - templates
+      entity.df
+      entity.java
+      enum.df
+      enum.java
+      repository.df
+      repository.java
+      resource.df
+      resource.java
+```
+
+### Creation of Customer entity
+
+Create the modelling file `mode.md`
+
+```bash
+codegen create-model model.md
+```
+
+Replace the content of the generated file `.gencode/modeling/model.md` for the following content.
+
+```bash
+entity Customer {
+    String name
+    Gender gender
+    LocalDate birthDate
+    String address
+    String city
+    String state
+}
+
+enum Gender {
+    MALE
+    FEMALE
+}
+```
+
+### Generation of microservice classes
+
+Now let's generate our classes of `entity`, `enum`, `repository` and `resource`.
+
+```bash
+codegen generate model.md
+```
+
+As we can see, then gencode generated all the necessary classes for run our microservice.
+
+```bash
+- src
+  - main
+    - java
+      - com
+        - example
+          - demo
+            - model
+              Customer.java
+            - enums
+              Gender.java
+            - repository
+              CustomerRepository.java
+            - web
+              - rest
+                CustomerResource.java  
+```
+
+### Running the microservice
+
+To test our microservice, just run the `DemoApplication.java` class.
+
+```bash
+curl --location --request POST 'http://localhost:8080/api/customers' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+	"name": "Raimundo Botelho",
+	"gender": "MALE",
+	"birthDate": "1979-08-07",
+	"address": "San Francisco street",
+	"city": "São paulo",
+	"state": "SP"
+}'
+```
+
+To test, open a terminal of your choice and call the add a new client endpoint.
+
+```bash
+curl --location --request GET 'http://localhost:8080/api/customers'
+```
+
+The result will be the customer persisted in the H2 database.
+
+```bash
+[
+  {
+    "id": 1,
+	"name": "Raimundo Botelho",
+	"gender": "MALE",
+	"birthDate": "1979-08-07",
+	"address": "San Francisco street",
+	"city": "São paulo",
+	"state": "SP"
+  }
+]
+```
+
+This is a small demonstration of what gencode can help in standardizing and accelerating your coding. Feel free to make changes to the code, test in another REST client tool and help us, collaborating with the improvement of the tool. Your feedback is very important!
