@@ -43,10 +43,10 @@ public class IterateAction implements MethodAction {
 
                 if (delimiterMethod != null) {
                     if (i == (list.size() - 1)) {
-                        buffer.insert(buffer.length() - System.lineSeparator().length(), delimiterMethod.getParameter(2));
+                        buffer.insert(buffer.length() - 1, delimiterMethod.getParameter(2));
                     }
                     else {
-                        buffer.insert(buffer.length() - System.lineSeparator().length(), delimiterMethod.getParameter(1));
+                        buffer.insert(buffer.length() - 1, delimiterMethod.getParameter(1));
                     }
                 }
 

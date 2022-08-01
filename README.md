@@ -220,13 +220,13 @@ public class HelloWorld {
 
 The following is a list of the commands available in the codegen CLI.
 
-| Command             | Description                                             | Parameters                                                                       |
-|---------------------|---------------------------------------------------------|----------------------------------------------------------------------------------|
-| **init**            | Initialize a codegen project                            | - git url (optional)<br/>- git branch (optional)                                 |
-| **create-template** | Create a new template file                              | - template file name                                                             |
-| **create-model**    | Create a new modeling file                              | - model file name                                                                |
-| **generate**        | Generate files based on templates                       | - model file name<br/>- force override (optional)                                |
-| **shift**           | Shift blocks automatically in template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift |
+| Command             | Description                                             | Parameters                                                                       | Options                            |
+|---------------------|---------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------------|
+| **init**            | Initialize a codegen project                            | - git url (optional)<br/>- git branch (optional)                                 |                                    |
+| **create-template** | Create a new template file                              | - template file name                                                             |                                    |
+| **create-model**    | Create a new modeling file                              | - model file name                                                                |                                    |
+| **generate**        | Generate files based on templates                       | - model file name                                                                | **-f or --force:** Force override  |
+| **shift**           | Shift blocks automatically in template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse |
 
 ## Codegen Engine
 
