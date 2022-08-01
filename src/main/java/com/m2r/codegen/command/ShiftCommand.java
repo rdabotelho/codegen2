@@ -16,10 +16,13 @@ public class ShiftCommand implements Runnable {
     private String templateDef;
 
     @CommandLine.Parameters(index = "1", description = "Line to start the shift")
-    private String lineFrom;
+    private Integer lineFrom;
 
     @CommandLine.Parameters(index = "2", description = "Count line to shift")
-    private String lineCount;
+    private Integer lineCount;
+
+    @CommandLine.Option(names = {"-r", "--reverse"}, description = "Reverse shift")
+    boolean reverse = false;
 
     @Override
     public void run() {
@@ -29,9 +32,9 @@ public class ShiftCommand implements Runnable {
         }
 
         try {
-            int linefromValue = Integer.parseInt(lineFrom);
-            int lineCountValue = Integer.parseInt(lineCount.replace("'", ""));
-
+            if (reverse) {
+                lineCount = lineCount * (-1);
+            }
             Pattern regex = Pattern.compile("block\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)");
             File file = new File(DirFileUtils.getTemplatesDir(), templateDef);
             Scanner scanner = new Scanner(file);
@@ -41,10 +44,10 @@ public class ShiftCommand implements Runnable {
                 Matcher m = regex.matcher(line);
                 if (m.find()) {
                     int startBefore = Integer.parseInt(m.group(1));
-                    if (startBefore >= linefromValue) {
+                    if (startBefore >= lineFrom) {
                         int endBefore = Integer.parseInt(m.group(2));
-                        int startAfter = startBefore + lineCountValue;
-                        int endAfter = endBefore + lineCountValue;
+                        int startAfter = startBefore + lineCount;
+                        int endAfter = endBefore + lineCount;
                         String lineBefore = line.replace(String.valueOf(startBefore), "#")
                                 .replace(String.valueOf(endBefore), "&")
                                 .replace("#", String.valueOf(startAfter))
