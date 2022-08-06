@@ -13,7 +13,8 @@ public enum DefinedMethod {
     REPLACE("replace", new ReplaceAction(), false),
     SHOW_IF("showIf", new ShowIfAction(), true),
     REPLACE_IF("replaceIf", new ReplaceIfAction(), false),
-    DELIMITER("delimiter", new DelimiterAction(), true);
+    DELIMITER("delimiter", new DelimiterAction(), true),
+    MASK("mask", new MaskAction(), true);
 
     private String name;
     private MethodAction action;

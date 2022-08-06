@@ -286,18 +286,6 @@ public class DomainAttribute {
         return hasMask() ? text : def;
     }
 
-    public ParamValue getValidators() {
-        return getParam("validators");
-    }
-
-    public boolean isRequired() {
-        return getValidators().hasValue("required");
-    }
-
-    public String ifRequired(String text, String def) {
-        return isRequired() ? text : def;
-    }
-
     public StringWrapper getManyToMany() {
         return getParam("manyToMany").getValue("false");
     }
