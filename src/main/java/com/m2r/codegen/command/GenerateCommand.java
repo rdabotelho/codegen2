@@ -6,6 +6,8 @@ import com.m2r.codegen.parser.modeling.Domain;
 import com.m2r.codegen.parser.modeling.DomainList;
 import com.m2r.codegen.parser.modeling.ModelingParser;
 import com.m2r.codegen.parser.template.*;
+import com.m2r.codegen.parser.template.actions.ActionState;
+import com.m2r.codegen.parser.template.actions.MethodAction;
 import com.m2r.codegen.parser.templatedef.BlockContent;
 import com.m2r.codegen.parser.templatedef.FileContent;
 import com.m2r.codegen.parser.templatedef.TemplateDefParser;
@@ -116,9 +118,12 @@ public class GenerateCommand implements Runnable {
         for (BlockContent block : fileContent.getBlocks()) {
             if (block.isDynamic()) {
                 block.setContext(fileContent.getContext());
-                StringBuilder content = new StringBuilder();
-                DefinedMethod.processMethod(block, block.getContext(), block.getMethod(), content);
-                writer.write(content.toString());
+                block.getMethod().getContext().inheritContext(block.getContext());
+                ActionState state = new ActionState(block, block.getMethod(), 0, block.getContent());
+                MethodAction blockAction = DefinedMethod.BLOCK.getAction();
+                blockAction.validate(state);
+                blockAction.process(state);
+                writer.write(state.getContent().toString());
             }
             else {
                 writer.write(block.getContent().toString());

@@ -1,56 +1,32 @@
 package com.m2r.codegen.parser.template.actions;
 
 import com.m2r.codegen.parser.el.ElExpr;
-import com.m2r.codegen.parser.template.DefinedMethod;
-import com.m2r.codegen.parser.template.Method;
 import com.m2r.codegen.parser.template.Param;
-import com.m2r.codegen.parser.templatedef.BlockContent;
-
 import java.util.List;
 
 public class IterateAction implements MethodAction {
 
     @Override
-    public void validate(Method method) throws RuntimeException {
-        if (method.getParameters().size() < 2)
+    public void validate(ActionState state) throws RuntimeException {
+        if (state.getMethod().getParameters().size() < 2)
             throw new RuntimeException("Iterate method required at least 2 parameters: \n" +
                     "- iterator\n- itemVar") ;
     }
 
     @Override
-    public void process(BlockContent block, Method method, StringBuilder content) throws Exception {
-        validate(method);
-        Param iteratorExpr = method.getParameters().get(0);
-        Param itemVar = method.getParameters().get(1);
-
-        List<?> list = (List<?>) ElExpr.stringToObject(block.getContext(), iteratorExpr.getValue());
+    public void process(ActionState state) throws Exception {
+        Param iteratorExpr = state.getMethod().getParameter(0);
+        Param itemVar = state.getMethod().getParameter(1);
+        List<?> list = (List<?>) ElExpr.stringToObject(state.getMethod().getContext(), iteratorExpr.getValue());
         if (list != null) {
-            method.getContext().inheritContext(block.getContext());
             for (int i=0; i<list.size(); i++) {
                 Object item = list.get(i);
-                method.getContext().put(itemVar.getValue(), item);
-                MethodAction action = new NoIteratorAction();
-                method.getContext().inheritContext(method.getContext());
-
-                StringBuilder buffer = new StringBuilder(content.toString());
-
-                Method delimiterMethod = method.getMethodByType(DefinedMethod.DELIMITER);
-                if (delimiterMethod != null && i == 0) {
-                    buffer.append(delimiterMethod.getParameter(0));
-                }
-
-                action.process(block, method, buffer);
-
-                if (delimiterMethod != null) {
-                    if (i == (list.size() - 1)) {
-                        buffer.insert(buffer.length() - 1, delimiterMethod.getParameter(2));
-                    }
-                    else {
-                        buffer.insert(buffer.length() - 1, delimiterMethod.getParameter(1));
-                    }
-                }
-
-                content.append(buffer.toString());
+                MethodAction noIteratorAction = new NoIteratorAction();
+                ActionState subState = new ActionState(state.getBlock(), state.getMethod(), 2, state.getBlock().getContent(), i, list.size());
+                subState.getMethod().getContext().inheritContext(state.getMethod().getContext());
+                subState.getMethod().getContext().put(itemVar.getValue(), item);
+                noIteratorAction.process(subState);
+                state.getContent().append(subState.getContent().toString());
             }
         }
 

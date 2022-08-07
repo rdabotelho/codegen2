@@ -62,13 +62,4 @@ public class Method {
         return methods.stream().filter(it -> it.getName().equals(type.getName())).findFirst().orElse(null);
     }
 
-    public String getMethodFlagParameter(DefinedMethod definedMethod, int index) {
-        Method method = this.getMethodByType(definedMethod);
-        if (method != null) {
-            definedMethod.getAction().validate(method);
-            return method.getParameter(index).getValue();
-        }
-        return null;
-    }
-
 }
