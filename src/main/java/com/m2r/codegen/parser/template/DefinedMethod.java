@@ -11,7 +11,8 @@ public enum DefinedMethod {
     SHOW_IF("showIf", new ShowIfAction()),
     REPLACE_IF("replaceIf", new ReplaceIfAction()),
     DELIMITER("delimiter", new DelimiterAction()),
-    MASK("mask", new MaskAction());
+    MASK("mask", new MaskAction()),
+    CASE("case", new CaseAction());
 
     private String name;
     private MethodAction action;

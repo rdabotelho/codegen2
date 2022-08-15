@@ -17,7 +17,9 @@ public class ReplaceAction implements MethodAction {
         ActionState subAction = new ActionState(state.getBlock(), state.getMethod(),state.getLevel() + 1,  newText);
         processChildrenMethods(subAction, state.getLevel() + 1, 0, 0);
         state.getContent().setLength(0);
-        state.getContent().append(line.replaceAll(oldText, subAction.getContent().toString()));
+        if (subAction.isShow()) {
+            state.getContent().append(line.replaceAll(oldText, subAction.getContent().toString()));
+        }
     }
 
 }

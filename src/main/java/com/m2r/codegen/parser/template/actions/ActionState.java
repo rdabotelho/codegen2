@@ -11,6 +11,7 @@ public class ActionState {
     private int index;
     private int size;
     private int level;
+    private boolean show = true;
 
     public ActionState(BlockContent blockContent, Method method, int level, StringBuilder content) {
         this(blockContent, method, level, content, 0, 0);
@@ -71,6 +72,14 @@ public class ActionState {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public void setShow(boolean show) {
+        this.show = show;
+    }
+
+    public boolean isShow() {
+        return show;
     }
 
 }

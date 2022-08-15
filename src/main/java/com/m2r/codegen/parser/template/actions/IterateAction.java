@@ -10,7 +10,14 @@ public class IterateAction implements MethodAction {
     public void validate(ActionState state) throws RuntimeException {
         if (state.getMethod().getParameters().size() < 2)
             throw new RuntimeException("Iterate method required at least 2 parameters: \n" +
-                    "- iterator\n- itemVar") ;
+                    "- iterator\n- itemVar");
+        boolean hasCase = state.getMethod().getMethods().stream().filter(it -> it.getName().equals("case")).findFirst().orElse(null) != null;
+        if (hasCase) {
+            boolean hasNoCase = state.getMethod().getMethods().stream().filter(it -> !it.getName().equals("case")).findFirst().orElse(null) != null;
+            if (hasNoCase) {
+                throw new RuntimeException("Case method cannot be used with other methods in an iterate method");
+            }
+        }
     }
 
     @Override
