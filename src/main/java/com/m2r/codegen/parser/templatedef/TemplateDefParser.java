@@ -33,8 +33,8 @@ public class TemplateDefParser extends Parser<FileContent> {
         this.template = template;
     }
 
-    public static FileContent parse(Template template, Reader reader) throws ParserException {
-        TemplateDefParser me = new TemplateDefParser(template);
+    public static FileContent parse(Template templateDef, Reader reader) throws ParserException {
+        TemplateDefParser me = new TemplateDefParser(templateDef);
         return me.execute(reader);
     }
 

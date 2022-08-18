@@ -45,7 +45,7 @@ public class DomainList {
     public void finallyProcess() {
         for (Domain d : domains) {
             for (DomainAttribute a : d.getAttributes()) {
-                if (!a.isBasicType()) {
+                if (!a.isBasic()) {
                     String domainName = null;
                     if (a.isList()) {
                         domainName = a.getItemType().toString();
@@ -58,35 +58,6 @@ public class DomainList {
                         throw new RuntimeException("Domain " + domainName + " not declared!");
                     }
                     a.setTypeDomain(typeDomain);
-                }
-            }
-        }
-        for (Domain d : domains) {
-            for (DomainAttribute a : d.getAttributes()) {
-                if (a.isComposition()) {
-                    Domain part = a.getTypeDomain();
-                    part.setCompositionOwner(d);
-                }
-                if (a.hasTypeDomain()) {
-                    for (DomainAttribute aa : a.getTypeDomain().getAttributes()) {
-                        if (aa.hasTypeDomain() && aa.getTypeDomain().getName().toString().equals(d.getName().toString())) {
-                            if (a.isMain() && aa.isMain()) {
-                                aa.setMain(false);
-                                aa.setMappedBy(a.getName().toCamelCase());
-                            }
-                            else if (!a.isMain() && !aa.isMain()) {
-                                a.setMain(true);
-                                aa.setMappedBy(a.getName().toCamelCase());
-                            }
-                            else if (a.isMain()) {
-                                aa.setMappedBy(a.getName().toCamelCase());
-                            }
-                            else {
-                                a.setMappedBy(aa.getName().toCamelCase());
-                            }
-                            break;
-                        }
-                    }
                 }
             }
         }

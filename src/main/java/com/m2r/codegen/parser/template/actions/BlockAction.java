@@ -2,29 +2,34 @@ package com.m2r.codegen.parser.template.actions;
 
 import com.m2r.codegen.parser.template.DefinedMethod;
 import com.m2r.codegen.parser.template.Method;
-import com.m2r.codegen.parser.templatedef.BlockContent;
 
 public class BlockAction implements MethodAction {
 
     @Override
-    public void validate(Method method) throws RuntimeException {
-        if (method.getParameters().size() != 2)
+    public void validate(ActionState state) throws RuntimeException {
+        if (state.getMethod().getParameters().size() != 2)
             throw new RuntimeException("Block method required 2 parameters (startLine and endLine)") ;
     }
 
     @Override
-    public void process(BlockContent block, Method method, StringBuilder content) throws Exception {
-        for (Method subMethod : method.getMethods()) {
-            StringBuilder buffer = new StringBuilder();
+    public void process(ActionState state) throws Exception {
+        for (Method subMethod : state.getMethod().getMethods()) {
+            DefinedMethod definedMethod = DefinedMethod.findDefinedMethod(subMethod.getName());
+            if (definedMethod == null) {
+                throw new RuntimeException("Method '" + subMethod.getName() + "' undefined!");
+            }
             if (subMethod.getName().equals("iterate")) {
-                DefinedMethod.processMethod(block, method.getContext(), subMethod, content);
+                ActionState subState = new ActionState(state.getBlock(), subMethod, 1, new StringBuilder());
+                subState.getMethod().getContext().inheritContext(state.getMethod().getContext());
+                definedMethod.getAction().validate(subState);
+                definedMethod.getAction().process(subState);
+                state.getContent().setLength(0);
+                state.getContent().append(subState.getContent());
             }
             else {
-                MethodAction action = new NoIteratorAction();
-                method.getContext().inheritContext(method.getContext());
-                action.process(block, method, content);
+                MethodAction noIteratorAction = new NoIteratorAction();
+                noIteratorAction.process(state);
             }
-            content.append(buffer.toString());
         }
     }
 

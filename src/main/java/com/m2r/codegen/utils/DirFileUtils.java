@@ -5,10 +5,25 @@ import java.io.PrintWriter;
 
 public class DirFileUtils {
 
-    public static File HOME_DIR = new File(System.getProperty("user.dir"));
-    public static File CODEGEN_DIR = new File(HOME_DIR, ".codegen");
+    private static File HOME_DIR = new File(System.getProperty("user.dir"));
 
-    public static File getScritsDir() {
+    private static File CODEGEN_DIR = new File(HOME_DIR, ".codegen");
+
+    private static File TEMP_DIR = new File(HOME_DIR, ".tmp");
+
+    public static File getHomeDir() {
+        return HOME_DIR;
+    }
+
+    public static File getCodegenDir() {
+        return CODEGEN_DIR;
+    }
+
+    public static File getTempDir() {
+        return TEMP_DIR;
+    }
+
+    public static File getModelingDir() {
         return new File(CODEGEN_DIR, "modeling");
     }
 

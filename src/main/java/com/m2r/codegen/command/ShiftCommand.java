@@ -26,7 +26,7 @@ public class ShiftCommand implements Runnable {
 
     @Override
     public void run() {
-        if (!DirFileUtils.CODEGEN_DIR.exists()) {
+        if (!DirFileUtils.getCodegenDir().exists()) {
             ConsoleUtils.printUninitializedError();
             return;
         }
@@ -35,7 +35,7 @@ public class ShiftCommand implements Runnable {
             if (reverse) {
                 lineCount = lineCount * (-1);
             }
-            Pattern regex = Pattern.compile("block\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*\\)");
+            Pattern regex = Pattern.compile("[block|case]\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*.*\\)");
             File file = new File(DirFileUtils.getTemplatesDir(), templateDef);
             Scanner scanner = new Scanner(file);
             StringBuilder buffer = new StringBuilder();

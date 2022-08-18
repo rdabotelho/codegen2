@@ -9,7 +9,7 @@
     <g fill="#fff" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
         <text x="11" y="15" fill="#010101" fill-opacity=".3">Latest release</text>
         <text x="10" y="14">Latest release</text>
-        <text x="101" y="15" fill="#010101" fill-opacity=".3">v2.0.0</text>
-        <text x="100" y="14">v2.0.0</text>
+        <text x="101" y="15" fill="#010101" fill-opacity=".3">v2.0.1</text>
+        <text x="100" y="14">v2.0.1</text>
     </g>
 </svg>
