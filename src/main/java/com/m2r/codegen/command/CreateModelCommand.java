@@ -12,12 +12,12 @@ public class CreateModelCommand implements Runnable {
 
     @Override
     public void run() {
-        if (!DirFileUtils.CODEGEN_DIR.exists()) {
+        if (!DirFileUtils.getCodegenDir().exists()) {
             ConsoleUtils.printUninitializedError();
             return;
         }
 
-        DirFileUtils.createFile(DirFileUtils.getScritsDir(), name, "entity HelloWorld {\n" +
+        DirFileUtils.createFile(DirFileUtils.getModelingDir(), name, "entity HelloWorld {\n" +
                 "\tString message\n" +
                 "}");
         ConsoleUtils.printSuccess("Model file '"+name+"' created!");

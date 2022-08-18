@@ -30,6 +30,14 @@ public class Param {
         return resolveValue(context, def).toString();
     }
 
+    public String resolveValueToString(ElContext context, String def, String mask) throws Exception {
+        String result = resolveValue(context, def).toString();
+        if (mask != null) {
+            return String.format(mask, result);
+        }
+        return result;
+    }
+
     public Object resolveValue(ElContext context, Object def) throws Exception {
         return this.isExpr() ? ElExpr.stringToObject(context, this.getValue(), def) : this.getValue();
     }

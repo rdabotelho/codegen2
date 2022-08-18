@@ -106,10 +106,6 @@ public class Domain {
     }
 
     public void finallyProcess() {
-        if (attributes.size() > 0) {
-            attributes.get(0).setFirst(true);
-            attributes.get(attributes.size() - 1).setLast(true);
-        }
     }
 
     public DomainAttribute getAttributeByName(String name) {

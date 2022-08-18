@@ -5,7 +5,7 @@
 
 	<groupId>com.m2r</groupId>
 	<artifactId>codegen</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>codegen</name>
@@ -43,6 +43,11 @@
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
 			<version>4.6.0.201612231935-r</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.21</version>
 		</dependency>
 	</dependencies>
 
@@ -118,7 +123,7 @@
 								<mkdir dir="${project.build.directory}/bin"/>
 								<copy file="${basedir}/codegen.cmd" todir="${project.build.directory}/codegen" />
 								<copy file="${basedir}/codegen.sh" tofile="${project.build.directory}/codegen/codegen" />
-								<copy file="${project.build.directory}/codegen-2.0.0-jar-with-dependencies.jar" tofile="${project.build.directory}/codegen/codegen.jar" />
+								<copy file="${project.build.directory}/codegen-2.0.1-jar-with-dependencies.jar" tofile="${project.build.directory}/codegen/codegen.jar" />
 							</target>
 						</configuration>
 						<goals>

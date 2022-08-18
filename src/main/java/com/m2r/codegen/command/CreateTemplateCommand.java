@@ -13,7 +13,7 @@ public class CreateTemplateCommand implements Runnable {
 
     @Override
     public void run() {
-        if (!DirFileUtils.CODEGEN_DIR.exists()) {
+        if (!DirFileUtils.getCodegenDir().exists()) {
             ConsoleUtils.printUninitializedError();
             return;
         }

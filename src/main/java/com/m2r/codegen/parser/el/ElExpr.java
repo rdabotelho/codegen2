@@ -68,13 +68,29 @@ public class ElExpr {
     }
 
     private static Object resolveAlternativeMethod(Object parent, String attributeName, ElContext context) throws Exception {
+        Object result = null;
         switch (attributeName) {
-            case "contains": return contains(parent, attributeName, context);
-            case "noContains": return !contains(parent, attributeName, context);
-            case "equals": return equals(parent, attributeName, context);
-            case "notEquals": return !equals(parent, attributeName, context);
-            default: return null;
+            case "contains":
+                result = contains(parent, attributeName, context);
+                break;
+            case "noContains":
+                result = !contains(parent, attributeName, context);
+                break;
+            case "equals":
+                result = equals(parent, attributeName, context);
+                break;
+            case "notEquals":
+                result = !equals(parent, attributeName, context);
         }
+
+        if (result == null) {
+            Method getParamMethod = parent.getClass().getDeclaredMethod("getParam", String.class);
+            if (getParamMethod != null) {
+                return getParamMethod.invoke(parent, attributeName);
+            }
+        }
+
+        return result;
     }
 
     private static Boolean contains(Object parent, String attributeName, ElContext context) throws Exception {
