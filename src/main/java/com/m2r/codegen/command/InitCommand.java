@@ -1,10 +1,10 @@
 package com.m2r.codegen.command;
 
 import com.m2r.codegen.parser.el.ElContext;
-import com.m2r.codegen.parser.template.Attribute;
-import com.m2r.codegen.parser.template.Template;
-import com.m2r.codegen.parser.template.TemplateParser;
-import com.m2r.codegen.parser.templatedef.FileContent;
+import com.m2r.codegen.parser.templatedef.Attribute;
+import com.m2r.codegen.parser.templatedef.TemplateDef;
+import com.m2r.codegen.parser.templatedef.TemplateDefParser;
+import com.m2r.codegen.parser.templatedefold.TemplateProcess;
 import com.m2r.codegen.utils.ConsoleUtils;
 import com.m2r.codegen.utils.DirFileUtils;
 import com.m2r.codegen.utils.TemplateRepo;
@@ -75,7 +75,7 @@ public class InitCommand implements Runnable {
 
     private void cloneCodegenProject() throws Exception {
         TemplateRepo.cloneBranch(gitUrl, gitBranch, DirFileUtils.getTempDir());
-        FileUtils.moveDirectoryToDirectory(new File(DirFileUtils.getTempDir(), ".codegen"), DirFileUtils.getHomeDir(), true);
+        FileUtils.copyDirectoryToDirectory(new File(DirFileUtils.getTempDir(), ".codegen"), DirFileUtils.getHomeDir());
     }
 
     private void copyBaseFilesToHome(File sourceDir, File destDir) throws Exception {
@@ -95,26 +95,22 @@ public class InitCommand implements Runnable {
                 copyBaseFilesToHome(source, dir);
             }
             else {
-                FileUtils.moveFileToDirectory(source, destDir, true);
+                FileUtils.copyFileToDirectory(source, destDir, true);
             }
         }
     }
 
     private void processDefinitionFile(File templateDefFile) throws Exception {
-        Template templateDef = TemplateParser.parse(new FileReader(templateDefFile));
+        TemplateDef templateDef = TemplateDefParser.parse(new FileReader(templateDefFile));
         Attribute sourceFile = templateDef.getAttributeByName("sourceFile");
         File templateFile = new File(templateDefFile.getParentFile(), sourceFile.getValue());
-        FileContent contentFile = GenerateCommand.parseTemplateDef(templateDef, templateFile);
+        TemplateProcess processor = GenerateCommand.parseTemplateDef(templateDef, templateFile);
 
         ElContext context = new ElContext();
-        File configFile = new File(DirFileUtils.getCodegenDir(), "config.properties");
-        Properties configProperties = new Properties();
-        configProperties.load(new FileInputStream(configFile));
-        configProperties.forEach((key, value) -> context.put(key.toString(), value));
-        contentFile.setContext(context);
+        context.loadFromPropertiesFile();
 
         Writer writer = new FileWriter(templateFile);
-        GenerateCommand.processBlocks(contentFile, writer);
+        processor.process(writer);
         writer.close();
     }
 

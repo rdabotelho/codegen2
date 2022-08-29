@@ -66,7 +66,7 @@ Here's what the previous template definition file would look like
 template {
     sourceFile: 'entity.java'
     targetFile: 'src/main/java/com/m2r/example/entity/${domain.name}.java'
-    consider: 'entity'
+    scope: 'entity'
     block(3, 3) {
         replace('Entity', domain.name)
     }
@@ -311,7 +311,7 @@ To create the template definition file, the codegen provides its own DSL where t
 template {
     sourceFile: 'template-file-name'
     targetFile: 'target-file-name'
-    consider: 'domain-type'
+    scope: 'domain-type'
     block(start-line, end-line) {
         replace('old-value', new-value)
         showIf(object, method, param1, param2, ...)

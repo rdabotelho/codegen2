@@ -6,19 +6,15 @@ import com.m2r.codegen.parser.modeling.Domain;
 import com.m2r.codegen.parser.modeling.DomainList;
 import com.m2r.codegen.parser.modeling.ModelingParser;
 import com.m2r.codegen.parser.modeling.ParamValue;
-import com.m2r.codegen.parser.template.*;
-import com.m2r.codegen.parser.template.actions.ActionState;
-import com.m2r.codegen.parser.template.actions.MethodAction;
-import com.m2r.codegen.parser.templatedef.BlockContent;
-import com.m2r.codegen.parser.templatedef.FileContent;
-import com.m2r.codegen.parser.templatedef.TemplateDefParser;
+import com.m2r.codegen.parser.templatedef.*;
+import com.m2r.codegen.parser.templatedefold.TemplateParser;
+import com.m2r.codegen.parser.templatedefold.TemplateProcess;
 import com.m2r.codegen.utils.ConsoleUtils;
 import com.m2r.codegen.utils.DirFileUtils;
 import picocli.CommandLine;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 @CommandLine.Command(name = "generate")
 public class GenerateCommand implements Runnable {
@@ -47,11 +43,12 @@ public class GenerateCommand implements Runnable {
             List<File> filesGenerated = new ArrayList<>();
             try {
                 DomainList domainList = parseScript(modelFile);
-                Template template = parseTemplate(templateFile.getName());
+                TemplateDef template = parseTemplate(templateFile.getName());
                 generate(domainList, template, filesGenerated);
                 filesGenerated.stream().forEach(it -> ConsoleUtils.printSuccess(String.format("File '%s' generated!", it.getName())));
             }
             catch (Exception e) {
+                e.printStackTrace();
                 ConsoleUtils.printError(e.getMessage());
                 return;
             }
@@ -64,7 +61,7 @@ public class GenerateCommand implements Runnable {
         return ModelingParser.parse(reader);
     }
 
-    private void generate(DomainList domainList, Template templateDef, List<File> filesGenerated) throws Exception {
+    private void generate(DomainList domainList, TemplateDef templateDef, List<File> filesGenerated) throws Exception {
         Attribute sourceFile = templateDef.getAttributeByName("sourceFile");
         if (sourceFile == null)
             throw new RuntimeException("sourceFile attribute required!");
@@ -72,8 +69,36 @@ public class GenerateCommand implements Runnable {
         if (targetFile == null)
             throw new RuntimeException("targetFile attribute required!");
 
+        // Scope singleton
+        if (templateDef.scope("singleton")) {
+            ElContext context = new ElContext();
+            context.loadFromPropertiesFile();
+            context.put("context", domainList);
+
+            File templateFile = new File(DirFileUtils.getTemplatesDir(), ElExpr.resolve(context, sourceFile.getValue()));
+            TemplateProcess processor = parseTemplateDef(templateDef, templateFile);
+            processor.getContext().inheritContext(context);
+
+            File file = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
+            if (file.exists() && !force) {
+                String option = ConsoleUtils.printAndReadOption("Override '" + file.getName() + "' file (N/y): ");
+                if (!option.equalsIgnoreCase("y")) {
+                    return;
+                }
+            }
+
+            file.getParentFile().mkdirs();
+            Writer writer = new FileWriter(file);
+            processor.process(writer);
+            writer.close();
+            filesGenerated.add(file);
+
+            return;
+        }
+
+        // Scope domain (entity ad enum)
         for (Domain domain : domainList.getDomains()) {
-            if (!templateDef.consider(domain.getType().toString())) {
+            if (!templateDef.scope(domain.getType().toString())) {
                 continue;
             }
             ParamValue consider = domain.getParam("exclude");
@@ -85,16 +110,12 @@ public class GenerateCommand implements Runnable {
             }
 
             ElContext context = new ElContext();
+            context.loadFromPropertiesFile();
             context.put("domain", domain);
 
             File templateFile = new File(DirFileUtils.getTemplatesDir(), ElExpr.resolve(context, sourceFile.getValue()));
-            FileContent contentFile = parseTemplateDef(templateDef, templateFile);
-
-            File configFile = new File(DirFileUtils.getCodegenDir(), "config.properties");
-            Properties configProperties = new Properties();
-            configProperties.load(new FileInputStream(configFile));
-            configProperties.forEach((key, value) -> context.put(key.toString(), value));
-            contentFile.setContext(context);
+            TemplateProcess processor = parseTemplateDef(templateDef, templateFile);
+            processor.setContext(context);
 
             File file = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
             if (file.exists() && !force) {
@@ -106,37 +127,20 @@ public class GenerateCommand implements Runnable {
 
             file.getParentFile().mkdirs();
             Writer writer = new FileWriter(file);
-            processBlocks(contentFile, writer);
+            processor.process(writer);
             writer.close();
             filesGenerated.add(file);
         }
     }
 
-    public static Template parseTemplate(String fileName) throws Exception {
+    public static TemplateDef parseTemplate(String fileName) throws Exception {
         Reader reader = new FileReader(new File(DirFileUtils.getTemplatesDir(), fileName));
-        return TemplateParser.parse(reader);
+        return TemplateDefParser.parse(reader);
     }
 
-    public static FileContent parseTemplateDef(Template templateDef, File templateFile) throws Exception {
+    public static TemplateProcess parseTemplateDef(TemplateDef templateDef, File templateFile) throws Exception {
         Reader reader = new FileReader(templateFile);
-        return TemplateDefParser.parse(templateDef, reader);
-    }
-
-    public static void processBlocks(FileContent fileContent, Writer writer) throws Exception {
-        for (BlockContent block : fileContent.getBlocks()) {
-            if (block.isDynamic()) {
-                block.setContext(fileContent.getContext());
-                block.getMethod().getContext().inheritContext(block.getContext());
-                ActionState state = new ActionState(block, block.getMethod(), 0, block.getContent());
-                MethodAction blockAction = DefinedMethod.BLOCK.getAction();
-                blockAction.validate(state);
-                blockAction.process(state);
-                writer.write(state.getContent().toString());
-            }
-            else {
-                writer.write(block.getContent().toString());
-            }
-        }
+        return TemplateParser.parse(templateDef, reader);
     }
 
 }

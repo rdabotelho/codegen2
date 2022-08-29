@@ -1,6 +1,6 @@
-package com.m2r.codegen.parser.template;
+package com.m2r.codegen.parser.templatedef;
 
-import com.m2r.codegen.parser.template.actions.*;
+import com.m2r.codegen.parser.templatedef.actions.*;
 import java.util.Arrays;
 
 public enum DefinedMethod {
@@ -11,8 +11,7 @@ public enum DefinedMethod {
     SHOW_IF("showIf", new ShowIfAction()),
     REPLACE_IF("replaceIf", new ReplaceIfAction()),
     DELIMITER("delimiter", new DelimiterAction()),
-    MASK("mask", new MaskAction()),
-    CASE("case", new CaseAction());
+    MASK("mask", new MaskAction());
 
     private String name;
     private MethodAction action;
