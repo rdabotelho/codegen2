@@ -1,4 +1,4 @@
-package com.m2r.codegen.parser.template;
+package com.m2r.codegen.parser.templatedef;
 
 public class Attribute {
 

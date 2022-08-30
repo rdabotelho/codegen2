@@ -66,7 +66,7 @@ Here's what the previous template definition file would look like
 template {
     sourceFile: 'entity.java'
     targetFile: 'src/main/java/com/m2r/example/entity/${domain.name}.java'
-    consider: 'entity'
+    scope: 'entity'
     block(3, 3) {
         replace('Entity', domain.name)
     }
@@ -98,7 +98,7 @@ template {
 
 To install codegen 2.0, you need to download the `codegen.zip` file in the link below and follow the next steps (for each OS).
 
-[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.0.1)
+[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.0.2)
 
 ### macOS / Linux
 
@@ -115,7 +115,7 @@ export PATH=$PATH:~/codegen
 4. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.0.1
+Version: 2.0.2
 ```
 
 ### Windows
@@ -125,7 +125,7 @@ Version: 2.0.1
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.0.1
+Version: 2.0.2
 ```
 
 ## Usage
@@ -139,7 +139,7 @@ codegen init
 If you prefer, we can clone the initial structure of a git repository, so we can reuse other templates already created.
 
 ```bash
-codegen init https://github.com/rdabotelho/mytemplates.git
+codegen init https://github.com/rdabotelho/codegen-archetype.git master
 ```
 
 After initialized, we can see, inside your project, the following structure created.
@@ -148,9 +148,11 @@ After initialized, we can see, inside your project, the following structure crea
 - .codegen
   + modeling
   + templates
+    config.properties
 ```
-- **modeling:** Folder for models files (with own DSL).
+- **modeling:** Folder for the models files (with own DSL).
 - **templates:** Folder for the template files and definition files (with own DSL).
+- **config.properties:** Properties file for the project's initial context.
 
 ### Creating a template
 To create a template run the following command: `codegen create-template <FILE-NAME>`.
@@ -161,8 +163,8 @@ codegen create-template entity.java
 ```
 
 See that two files were created in the folder `.codegen/templates`.
-- **entity.df:** Template definition (with generation logic).
-- **entity.java:** Template (without generation logic).
+- **entity.df:** Template definition file (with generation logic).
+- **entity.java:** Template file (without generation logic).
 
 >**Note:** Both files are created with sample code that generates a class in Java. To ignore this example code, just erase and implement your own code.
 
@@ -220,18 +222,18 @@ public class HelloWorld {
 
 The following is a list of the commands available in the codegen CLI.
 
-| Command             | Description                                             | Parameters                                                                       | Options                            |
-|---------------------|---------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------------|
-| **init**            | Initialize a codegen project                            | - git url (optional)<br/>- git branch (optional)                                 |                                    |
-| **create-template** | Create a new template file                              | - template file name                                                             |                                    |
-| **create-model**    | Create a new modeling file                              | - model file name                                                                |                                    |
-| **generate**        | Generate files based on templates                       | - model file name                                                                | **-f or --force:** Force override  |
-| **shift**           | Shift blocks automatically in template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse |
+| Command             | Description                                                        | Parameters                                                                       | Options                            |
+|---------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------------|
+| **init**            | Initialize a codegen project                                       | - git url (optional)<br/>- git branch (optional)                                 |                                    |
+| **create-template** | Create a new template file and template definition file            | - template file name                                                             |                                    |
+| **create-model**    | Create a new modeling file                                         | - model file name                                                                |                                    |
+| **shift**           | Shift blocks' lines automatically in the template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse |
+| **generate**        | Generate files based on templates                                  | - model file name                                                                | **-f or --force:** Force override  |
 
 ## Codegen Engine
 
 For the generation of the final file, the codegen has an engine that implements two processes:
-1. **Modeling file processing:** Receives the modeling file and transforms it into metadata with the user-defined model.
+1. **Modeling file processing:** Receives the modeling file and transforms it into metadata with the user-defined modeling.
 2. **Template definition file processing:** In addition to the metadata from the previous processing, it also receives the original template file and the file with the definition of how the template content will be generated.
 
 ![codegen-engine](codegen-engine.png)
@@ -311,23 +313,46 @@ To create the template definition file, the codegen provides its own DSL where t
 template {
     sourceFile: 'template-file-name'
     targetFile: 'target-file-name'
-    consider: 'domain-type'
+    scope: 'domain-type'
     block(start-line, end-line) {
         replace('old-value', new-value)
         showIf(object, method, param1, param2, ...)
-        delimiter('prefix', 'divider', 'suffix')
         :
     }
     block(start-line, end-line) {
         iterate(list, item-name) {
+            showIf(object, method, param1, param2, ...)
             replace('old-value', new-value)
-            replaceIf('old-value', new-value, object-method, param1, param2, ...)
+            replaceIf('old-value', new-value, object-method, param1, param2, ...) {
+              mask('something: %s')
+            }
+            delimiter('prefix', 'divider', 'suffix')
             :
         }
     }
     :
 }
 ```
+
+**Attributes allowed in the template:**
+
+| Command        | Description                                      |
+|----------------|--------------------------------------------------|
+| **sourceFile** | Template file name                               |
+| **targetFile** | Target file name                                 |
+| **scope**      | Scope para a geração (entity, enum or singleton) |
+
+**Functions allowed in the blocks:**
+
+| Command       | Description                                                  | Parameters                                                                               |
+|---------------|--------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| **replace**   | Replace parts of a block's content                           | - oldText (regex/text)<br/>- newText                                                     |
+| **replaceIf** | Replace parts of a block's content based on a condition      | - oldText (regex/text)<br/>- newText<br/>- method<br/>- value<br/>- elseValue (optional) |
+| **iterate**   | Iterates over a collection (domains or attributes)           | - collection<br/>- itemVar                                                               |
+| **showIf**    | Display the content of a block (or not) based on a condition | - method<br/>- attribute (optional)<br/>- value                                          |
+| **delimiter** | In an iterator include prefix, divisor or suffix             | - prefix<br/>- divider<br/>- suffix                                                      |
+| **mask**      | Apply a mask to the replace value                            | - value                                                                                  |
+
 
 #### Generated file
 
@@ -368,10 +393,10 @@ To get started, go to site [Spring Initializer](https://start.spring.io/), and c
 After opening the project in an IDE of your preference and having already installed the codegen in your OS (installation section), run the startup command.
 
 ```bash
-codegen init https://github.com/rdabotelho/codegen-templates.git
+codegen init https://github.com/rdabotelho/codegen-archetype.git spring-boot-java-h2
 ```
 
->**Note:** To speed up the process, we used the templates already created for this example in the repository `codegen-templates.git`. After initialization, feel free to make improvements.
+>**Note:** To speed up the process, we used the templates already created for this example in the repository `codegen-archetype.git`. After initialization, feel free to make improvements.
 
 After initialization, we can see the template files for `entity`, `enum`, `repository` and `resource`.
 
@@ -387,6 +412,7 @@ After initialization, we can see the template files for `entity`, `enum`, `repos
       repository.java
       resource.df
       resource.java
+    config.properties
 ```
 
 >**Note:** If you change some of these template files, don't forget to use the command `codegen shift` to adjust the lines of the blocks in the template definition files.

@@ -1,10 +1,11 @@
-package com.m2r.codegen.parser.template;
+package com.m2r.codegen.parser.templatedef;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Template {
+public class TemplateDef {
 
     private List<Attribute> attributes = new ArrayList<>();
     private List<Method> methods = new ArrayList<>();
@@ -36,15 +37,20 @@ public class Template {
                 .orElse(null);
     }
 
-    public boolean consider(String type) {
-        Attribute considerAttr = getAttributeByName("consider");
-        if (considerAttr == null) {
+    public boolean scope(String type) {
+        Attribute scopeAttr = getAttributeByName("scope");
+        if (scopeAttr == null) {
             return true;
         }
-        String[] types = considerAttr.getValue().split(",");
+        String[] types = scopeAttr.getValue().split(",");
         return Arrays.stream(types)
                 .filter(it -> it.trim().equals(type))
                 .findFirst()
                 .orElse(null) != null;
     }
+
+    public List<Method> getBlockMethods() {
+        return this.methods.stream().filter(it -> it.isBlock()).collect(Collectors.toList());
+    }
+
 }

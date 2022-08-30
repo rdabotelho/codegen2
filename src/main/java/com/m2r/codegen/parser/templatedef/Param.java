@@ -1,4 +1,4 @@
-package com.m2r.codegen.parser.template;
+package com.m2r.codegen.parser.templatedef;
 
 import com.m2r.codegen.parser.el.ElContext;
 import com.m2r.codegen.parser.el.ElExpr;
@@ -44,6 +44,10 @@ public class Param {
 
     public String getValue() {
         return value;
+    }
+
+    public Integer getIntegerValue() {
+        return Integer.parseInt(value);
     }
 
     public void setValue(String value) {

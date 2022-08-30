@@ -1,10 +1,12 @@
-package com.m2r.codegen.parser.template.actions;
+package com.m2r.codegen.parser.templatedef.actions;
+
+import com.m2r.codegen.parser.templatedef.Method;
 
 public class DelimiterAction implements MethodAction {
 
     @Override
-    public void validate(ActionState state) throws RuntimeException {
-        if (state.getMethod().getParameters().size() < 3)
+    public void validate(Method method) throws RuntimeException {
+        if (method.getParameters().size() < 3)
             throw new RuntimeException("Iterate method required 3 parameters: \n" +
                     "- prefix\n- divider\n- suffix") ;
     }
@@ -16,7 +18,7 @@ public class DelimiterAction implements MethodAction {
         String suffix = state.getMethod().getParameter(2).getValue();
         if (state.getIndex() == 0) {
             int i = 0;
-            String str = state.getContent().toString();
+            String str = state.getMethod().getBlock().getContent().toString();
             while (i < str.length()) {
                 char c = str.charAt(i++);
                 if (c != '\n' && c != '\r' && c != '\t') {
@@ -24,13 +26,13 @@ public class DelimiterAction implements MethodAction {
                     break;
                 }
             }
-            state.getContent().insert(i, prefix);
+            state.getMethod().getBlock().getContent().insert(i, prefix);
         }
         if (state.getIndex() == (state.getSize() - 1)) {
-            state.getContent().insert(state.getContent().length() - 1, suffix);
+            state.getMethod().getBlock().getContent().insert(state.getMethod().getBlock().getContent().length() - 1, suffix);
         }
         else {
-            state.getContent().insert(state.getContent().length() - 1, divider);
+            state.getMethod().getBlock().getContent().insert(state.getMethod().getBlock().getContent().length() - 1, divider);
         }
     }
 
