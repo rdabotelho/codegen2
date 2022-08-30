@@ -101,8 +101,8 @@ public class Domain {
         return "enum".equals(getType().toString());
     }
 
-    public boolean isClass() {
-        return "class".equals(getType().toString());
+    public boolean isEntity() {
+        return "entity".equals(getType().toString());
     }
 
     public void finallyProcess() {

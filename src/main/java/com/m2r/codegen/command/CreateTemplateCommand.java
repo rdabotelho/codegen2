@@ -34,7 +34,7 @@ public class CreateTemplateCommand implements Runnable {
         DirFileUtils.createFile(DirFileUtils.getTemplatesDir(), name, "template {\n" +
             "\tsourceFile: 'entity.java'\n" +
             "\ttargetFile: 'src/main/java/com/m2r/example/entity/${domain.name}.java'\n" +
-            "\tconsider: 'entity'\n" +
+            "\tscope: 'entity'\n" +
             "\tblock(3, 3) {\n" +
             "\t\treplace('Entity', domain.name)\n" +
             "\t}\n" +

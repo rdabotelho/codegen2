@@ -1,25 +1,28 @@
-package com.m2r.codegen.parser.templatedef;
+package com.m2r.codegen.parser.templatedefold;
 
 import com.m2r.codegen.parser.el.ElContext;
+import com.m2r.codegen.parser.templatedef.Method;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileContent {
 
-    private List<BlockContent> blocks = new ArrayList<>();
+    private List<Method> methods = new ArrayList<>();
+
+    private List<Block> blocks = new ArrayList<>();
 
     private ElContext context;
 
-    public List<BlockContent> getBlocks() {
+    public List<Block> getBlocks() {
         return blocks;
     }
 
-    public BlockContent getBlockByLine(int line) {
+    public Block getBlockByLine(int line) {
         return blocks.stream().filter(it -> it.getLineStart() == line).findFirst().orElse(null);
     }
 
-    public void setBlocks(List<BlockContent> blocks) {
+    public void setBlocks(List<Block> blocks) {
         this.blocks = blocks;
     }
 
