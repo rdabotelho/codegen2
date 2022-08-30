@@ -2,7 +2,6 @@ package com.m2r.codegen.parser.templatedef.actions;
 
 import com.m2r.codegen.parser.templatedef.Method;
 import com.m2r.codegen.parser.templatedef.Param;
-import com.m2r.codegen.parser.templatedefold.Block;
 import com.m2r.codegen.parser.templatedefold.Content;
 
 public class ReplaceIfAction implements MethodAction {

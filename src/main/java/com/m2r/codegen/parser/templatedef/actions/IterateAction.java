@@ -16,7 +16,7 @@ public class IterateAction implements MethodAction {
     public void validate(Method method) throws RuntimeException {
         if (method.getParameters().size() < 2)
             throw new RuntimeException("Iterate method required at least 2 parameters: \n" +
-                    "- iterator\n- itemVar");
+                    "- collection\n- itemVar");
         boolean hasCase = method.getMethods().stream().filter(it -> it.getName().equals("case")).findFirst().orElse(null) != null;
         if (hasCase) {
             boolean hasNoCase = method.getMethods().stream().filter(it -> !it.getName().equals("case")).findFirst().orElse(null) != null;
