@@ -79,7 +79,7 @@ public class DomainAttribute {
     }
 
     public boolean isOneToMany() {
-        ParamValue param = getParam("manyToMany");
+        ParamValue param = getParam("oneToMany");
         return isList() && !(param != null && param.toString().equals("true"));
     }
 
