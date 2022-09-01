@@ -65,16 +65,29 @@ public class InitCommand implements Runnable {
             else {
                 cloneCodegenProject();
             }
-
-            FileUtils.deleteDirectory(DirFileUtils.getTempDir());
         }
         catch (Exception e) {
-            throw new RuntimeException("Error copying base directory!");
+            throw new RuntimeException("Error copying base directory: " + e.getMessage());
+        }
+        finally {
+            if (DirFileUtils.getTempDir().exists()) {
+                new Thread(() -> {
+                        try {
+                            FileUtils.forceDelete(DirFileUtils.getTempDir());
+                        }
+                        catch (Exception e) {
+                        }
+                    }
+                ).start();
+            }
         }
     }
 
     private void cloneCodegenProject() throws Exception {
         TemplateRepo.cloneBranch(gitUrl, gitBranch, DirFileUtils.getTempDir());
+        if (!isGitRepositoryValid(DirFileUtils.getTempDir())) {
+            throw new RuntimeException("It is not a gencode valid git repository!");
+        }
         FileUtils.copyDirectoryToDirectory(new File(DirFileUtils.getTempDir(), ".codegen"), DirFileUtils.getHomeDir());
     }
 
@@ -101,21 +114,41 @@ public class InitCommand implements Runnable {
     }
 
     private void processDefinitionFile(File templateDefFile) throws Exception {
-        TemplateDef templateDef = TemplateDefParser.parse(new FileReader(templateDefFile));
-        Attribute sourceFile = templateDef.getAttributeByName("sourceFile");
-        File templateFile = new File(templateDefFile.getParentFile(), sourceFile.getValue());
-        TemplateProcess processor = GenerateCommand.parseTemplateDef(templateDef, templateFile);
+        Reader reader = null;
+        Writer writer = null;
+        try {
+            reader = new FileReader(templateDefFile);
+            TemplateDef templateDef = TemplateDefParser.parse(reader);
+            Attribute sourceFile = templateDef.getAttributeByName("sourceFile");
+            File templateFile = new File(templateDefFile.getParentFile(), sourceFile.getValue());
+            TemplateProcess processor = GenerateCommand.parseTemplateDef(templateDef, templateFile);
 
-        ElContext context = new ElContext();
-        context.loadFromPropertiesFile();
+            ElContext context = new ElContext();
+            context.loadFromPropertiesFile();
 
-        Writer writer = new FileWriter(templateFile);
-        processor.process(writer);
-        writer.close();
+            writer = new FileWriter(templateFile);
+            processor.process(writer);
+        }
+        finally {
+            if (writer != null) {
+                writer.close();
+            }
+            if (reader != null) {
+                reader.close();
+            }
+        }
     }
 
     private boolean isDefinitionFile(File file) {
         return file.getName().startsWith("_") && file.getName().endsWith(".df");
+    }
+
+    private boolean isGitRepositoryValid(File dir) {
+       File gencodeDir = Arrays.stream(dir.listFiles()).filter(it -> it.getName().equals(".codegen")).findFirst().orElse(null);
+       if (gencodeDir == null) {
+           return false;
+       }
+       return true;
     }
 
     class FilterNotHidden implements FileFilter {

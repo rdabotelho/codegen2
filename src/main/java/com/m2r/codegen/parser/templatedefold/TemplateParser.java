@@ -15,6 +15,7 @@ public class TemplateParser extends Parser<TemplateProcess> {
 
     static private enum TokenType implements ITokenType {
 
+        CAR_RETURN("\\r"),
         BREAK_LINE("\\n"),
         OTHER(".");
 
@@ -33,6 +34,17 @@ public class TemplateParser extends Parser<TemplateProcess> {
     public TemplateParser(TemplateDef template) {
         super(false);
         this.templateDef = template;
+    }
+
+    protected TemplateProcess execute(Reader reader) throws ParserException {
+        try {
+            return super.execute(reader);
+        }
+        catch (Exception e) {
+            System.out.println(this.pos);
+            System.out.println(this.tokens);
+            throw e;
+        }
     }
 
     public static TemplateProcess parse(TemplateDef templateDef, Reader reader) throws ParserException {

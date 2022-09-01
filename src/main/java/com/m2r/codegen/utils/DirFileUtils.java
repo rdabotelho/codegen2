@@ -2,6 +2,7 @@ package com.m2r.codegen.utils;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.UUID;
 
 public class DirFileUtils {
 
@@ -9,7 +10,7 @@ public class DirFileUtils {
 
     private static File CODEGEN_DIR = new File(HOME_DIR, ".codegen");
 
-    private static File TEMP_DIR = new File(HOME_DIR, ".tmp");
+    private static File TEMP_DIR = new File(System.getProperty("java.io.tmpdir"), UUID.randomUUID().toString());
 
     public static File getHomeDir() {
         return HOME_DIR;
