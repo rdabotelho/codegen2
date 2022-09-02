@@ -13,7 +13,6 @@ public class Domain {
     private List<DomainAttribute> attributes = new ArrayList<>();
     private Map<String, ParamValue> params = new HashMap<>();
     private Domain compositionOwner;
-
     public Domain(DomainList parent) {
         this.parent = parent;
     }

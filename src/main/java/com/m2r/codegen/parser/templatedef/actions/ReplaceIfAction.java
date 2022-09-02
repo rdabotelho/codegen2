@@ -28,7 +28,8 @@ public class ReplaceIfAction implements MethodAction {
             state.getMethod().getBlock().getContent().replace(oldText, newText);
         }
         else if (elseValue != null) {
-            state.getMethod().getBlock().getContent().replace(oldText, elseValue.getValue());
+            String elseValueStr = elseValue.resolveValueToString(state.getMethod().getBlock().getContext(), "");
+            state.getMethod().getBlock().getContent().replace(oldText, elseValueStr);
         }
     }
 

@@ -69,23 +69,24 @@ public class DomainAttribute {
     }
 
     public boolean isOneToOne() {
-        ParamValue param = getParam("manyToOne");
-        return hasTypeDomain() && !isEnum() && !isList() && !(param != null && param.toString().equals("true"));
-    }
-
-    public boolean isManyToOne() {
-        ParamValue param = getParam("manyToOne");
-        return hasTypeDomain() && !isList() && param != null && param.toString().equals("true");
+        return hasTypeDomain() && !isEnum() && !isList() && !existParamEquals("manyToOne", "true");
     }
 
     public boolean isOneToMany() {
-        ParamValue param = getParam("oneToMany");
-        return isList() && !(param != null && param.toString().equals("true"));
+        return isList() && !existParamEquals("manyToMany", "true");
+    }
+
+    public boolean isManyToOne() {
+        return hasTypeDomain() && !isList() && existParamEquals("manyToOne", "true");
     }
 
     public boolean isManyToMany() {
-        ParamValue param = getParam("manyToMany");
-        return isList() && param != null && param.toString().equals("true");
+        return isList() && existParamEquals("manyToMany", "true");
+    }
+
+    private boolean existParamEquals(String paramName, String value) {
+        ParamValue param = getParam(paramName);
+        return param != null && param.toString().equals(value);
     }
 
     public StringWrapper getItemType() {
