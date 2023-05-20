@@ -6,8 +6,8 @@ import java.util.UUID;
 
 public class DirFileUtils {
 
-    private static File HOME_DIR = new File(System.getProperty("user.dir")+"/temp");
-    // private static File HOME_DIR = new File(System.getProperty("user.dir"));
+    //private static File HOME_DIR = new File(System.getProperty("user.dir")+"/temp");
+    private static File HOME_DIR = new File(System.getProperty("user.dir"));
 
     private static File CODEGEN_DIR = new File(HOME_DIR, ".codegen");
 
