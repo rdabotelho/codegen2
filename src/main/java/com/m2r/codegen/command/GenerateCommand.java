@@ -58,7 +58,12 @@ public class GenerateCommand implements Runnable {
 
     private DomainList parseScript(String fileName) throws Exception {
         Reader reader = new FileReader(new File(DirFileUtils.getModelingDir(), fileName));
-        return ModelParser.parse(reader);
+        try {
+            return ModelParser.parse(reader);
+        }
+        finally {
+            reader.close();
+        }
     }
 
     private void generate(DomainList domainList, TemplateDef templateDef, List<File> filesGenerated) throws Exception {
@@ -135,12 +140,22 @@ public class GenerateCommand implements Runnable {
 
     public static TemplateDef parseTemplate(String fileName) throws Exception {
         Reader reader = new FileReader(new File(DirFileUtils.getTemplatesDir(), fileName));
-        return TemplateDefParser.parse(reader);
+        try {
+            return TemplateDefParser.parse(reader);
+        }
+        finally {
+            reader.close();
+        }
     }
 
     public static TemplateProcess parseTemplateDef(TemplateDef templateDef, File templateFile) throws Exception {
         Reader reader = new FileReader(templateFile);
-        return TemplateParser.parse(templateDef, reader);
+        try {
+            return TemplateParser.parse(templateDef, reader);
+        }
+        finally {
+            reader.close();
+        }
     }
 
 }
