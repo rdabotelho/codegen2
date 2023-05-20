@@ -8,7 +8,7 @@ public class InfoCommand implements Runnable {
 
     @Override
     public void run() {
-        ConsoleUtils.println("Codegen command line interface (CLI)\nVersion: 2.0.1");
+        ConsoleUtils.println("Codegen command line interface (CLI)\nVersion: 2.1.0");
     }
 
 }
