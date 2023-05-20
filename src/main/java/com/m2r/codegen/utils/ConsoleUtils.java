@@ -11,11 +11,11 @@ public class ConsoleUtils {
     }
 
     public static void printSuccess(String msg) {
-        println("[success] " + msg);
+        println("\u001B[92m[success]\u001B[0m " + msg);
     }
 
     public static void printError(String msg) {
-        println("[error] " + msg);
+        println("\u001B[32m[error]\u001B[0m " + msg);
     }
 
     public static void printUninitializedError() {
@@ -30,7 +30,7 @@ public class ConsoleUtils {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String name = null;
         try {
-            System.out.print(msg);
+            System.out.print("\u001B[92m?\u001B[33m " + msg + ": \u001B[0m");
             return reader.readLine();
         }
         catch (IOException e) {

@@ -47,7 +47,7 @@ public class DomainAttribute {
         return getParam(key, false);
     }
 
-    public ParamValue getParam(String key, boolean isArray) {
+    public ParamValue getParam(String key, Boolean isArray) {
         ParamValue str = getParams().get(key);
         return str == null ? new ParamValue(isArray) : str;
     }

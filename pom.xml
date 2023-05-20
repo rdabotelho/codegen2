@@ -5,7 +5,7 @@
 
 	<groupId>com.m2r</groupId>
 	<artifactId>codegen</artifactId>
-	<version>2.0.2</version>
+	<version>2.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>codegen</name>
@@ -30,6 +30,11 @@
 			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>com.m2r</groupId>
+			<artifactId>model-dsl</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
@@ -37,6 +42,11 @@
 		<dependency>
 			<groupId>info.picocli</groupId>
 			<artifactId>picocli</artifactId>
+			<version>3.9.6</version>
+		</dependency>
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli-codegen</artifactId>
 			<version>3.9.6</version>
 		</dependency>
 		<dependency>
@@ -123,7 +133,7 @@
 								<mkdir dir="${project.build.directory}/bin"/>
 								<copy file="${basedir}/codegen.cmd" todir="${project.build.directory}/codegen" />
 								<copy file="${basedir}/codegen.sh" tofile="${project.build.directory}/codegen/codegen" />
-								<copy file="${project.build.directory}/codegen-2.0.2-jar-with-dependencies.jar" tofile="${project.build.directory}/codegen/codegen.jar" />
+								<copy file="${project.build.directory}/codegen-2.1.0-SNAPSHOT-jar-with-dependencies.jar" tofile="${project.build.directory}/codegen/codegen.jar" />
 							</target>
 						</configuration>
 						<goals>

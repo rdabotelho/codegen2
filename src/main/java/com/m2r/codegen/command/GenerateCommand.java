@@ -45,7 +45,7 @@ public class GenerateCommand implements Runnable {
                 DomainList domainList = parseScript(modelFile);
                 TemplateDef template = parseTemplate(templateFile.getName());
                 generate(domainList, template, filesGenerated);
-                filesGenerated.stream().forEach(it -> ConsoleUtils.printSuccess(String.format("File '%s' generated!", it.getName())));
+                filesGenerated.stream().forEach(it -> ConsoleUtils.printSuccess(String.format("File \u001B[33m'%s'\u001B[0m generated!", it.getName())));
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -81,7 +81,7 @@ public class GenerateCommand implements Runnable {
 
             File file = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
             if (file.exists() && !force) {
-                String option = ConsoleUtils.printAndReadOption("Override '" + file.getName() + "' file (N/y): ");
+                String option = ConsoleUtils.printAndReadOption("Override \u001B[92m'" + file.getName() + "'\u001B[0m file (N/y): ");
                 if (!option.equalsIgnoreCase("y")) {
                     return;
                 }
@@ -119,7 +119,7 @@ public class GenerateCommand implements Runnable {
 
             File file = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
             if (file.exists() && !force) {
-                String option = ConsoleUtils.printAndReadOption("Override '" + file.getName() + "' file (N/y): ");
+                String option = ConsoleUtils.printAndReadOption("Override \u001B[92m'" + file.getName() + "'\u001B[0m file (N/y): ");
                 if (!option.equalsIgnoreCase("y")) {
                     continue;
                 }

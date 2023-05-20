@@ -2,6 +2,8 @@ package com.m2r.codegen;
 
 import com.m2r.codegen.command.*;
 import com.m2r.codegen.utils.ConsoleUtils;
+import com.m2r.codegen.utils.GraalvmUtils;
+
 import picocli.CommandLine;
 
 @CommandLine.Command(
@@ -16,18 +18,20 @@ import picocli.CommandLine;
 )
 public class Main implements Runnable {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         CommandLine.run(new Main(), args);
+
+        //GraalvmUtils.scanAllMethods();
     }
 
     @Override
     public void run() {
-        ConsoleUtils.println("Use:");
-        ConsoleUtils.println("\t- init: Initialize a codegen project");
-        ConsoleUtils.println("\t- create-template: Create a new template file");
-        ConsoleUtils.println("\t- create-model: Create a new modeling file");
-        ConsoleUtils.println("\t- generate: Generate files based on templates");
-        ConsoleUtils.println("\t- shift: Shift blocks automatically in template definition files");
+        ConsoleUtils.println("\nCommands:\n");
+        ConsoleUtils.println(" - \u001B[94minit:\u001B[0m Initialize um codegen project");
+        ConsoleUtils.println(" - \u001B[94mcreate-template:\u001B[0m Create a new template file");
+        ConsoleUtils.println(" - \u001B[94mcreate-model:\u001B[0m Create a new modeling file");
+        ConsoleUtils.println(" - \u001B[94mgenerate:\u001B[0m Generate files based on templates");
+        ConsoleUtils.println(" - \u001B[94mshift:\u001B[0m Shift blocks automatically in template definition files\n");
     }
 
 }

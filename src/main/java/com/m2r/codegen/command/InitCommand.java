@@ -23,6 +23,9 @@ public class InitCommand implements Runnable {
     @CommandLine.Parameters(index = "1", defaultValue = "master")
     private String gitBranch;
 
+    @CommandLine.Option(names = { "-p", "--properties" }, description = "the archive file")
+    private File properties;
+
     @Override
     public void run() {
         if (DirFileUtils.getCodegenDir().exists()) {
@@ -30,7 +33,11 @@ public class InitCommand implements Runnable {
             return;
         }
         if (!gitUrl.equals("")) {
-            initCodegenFromGit();
+            if (properties != null && !properties.exists()) {
+                ConsoleUtils.printError("Properties file not found: " + properties.getName() + "!");
+                return;
+            }
+            initCodegenFromGit(properties);
         }
         else {
             initCodegen();
@@ -44,7 +51,7 @@ public class InitCommand implements Runnable {
         DirFileUtils.createFile(DirFileUtils.getCodegenDir(), "config.properties", "PROJECT_NAME=HelloWorld");
     }
 
-    private void initCodegenFromGit() {
+    private void initCodegenFromGit(File userPropertiesFile) {
         try {
 
             boolean isEmpty = DirFileUtils.getHomeDir().toPath().toFile().listFiles(new FilterNotHidden()).length == 0;
@@ -52,14 +59,17 @@ public class InitCommand implements Runnable {
             if (isEmpty) {
                 FileUtils.cleanDirectory(DirFileUtils.getHomeDir());
                 cloneCodegenProject();
-                File configFile = new File(DirFileUtils.getCodegenDir(), "config.properties");
                 Properties configProperties = new Properties();
+                File targetConfigFile = new File(DirFileUtils.getCodegenDir(), "config.properties");
+                File configFile = userPropertiesFile != null ? userPropertiesFile : targetConfigFile;
                 configProperties.load(new FileInputStream(configFile));
-                configProperties.forEach((key, value) -> {
-                    String newValue = ConsoleUtils.printAndReadOption( key + " [" + value + "]: ");
-                    configProperties.put(key, newValue);
-                });
-                configProperties.store(new FileOutputStream(configFile), null);
+                if (userPropertiesFile == null) {
+                    configProperties.forEach((key, value) -> {
+                        String newValue = ConsoleUtils.printAndReadOption( key + " [" + value + "]");
+                        configProperties.put(key, newValue.isEmpty() ? value : newValue);
+                    });
+                }
+                configProperties.store(new FileOutputStream(targetConfigFile), null);
                 copyBaseFilesToHome(DirFileUtils.getTempDir(), DirFileUtils.getHomeDir());
             }
             else {
