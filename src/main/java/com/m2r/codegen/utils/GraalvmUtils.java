@@ -3,30 +3,25 @@ package com.m2r.codegen.utils;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import com.m2r.codegen.command.CreateModelCommand;
 import com.m2r.codegen.command.CreateTemplateCommand;
 import com.m2r.codegen.command.GenerateCommand;
 import com.m2r.codegen.command.InfoCommand;
 import com.m2r.codegen.command.InitCommand;
 import com.m2r.codegen.command.ShiftCommand;
-import com.m2r.codegen.parser.modeling.Domain;
-import com.m2r.codegen.parser.modeling.DomainAttribute;
-import com.m2r.codegen.parser.modeling.DomainList;
-import com.m2r.codegen.parser.modeling.ParamValue;
-import com.m2r.codegen.parser.modeling.StringWrapper;
-import com.m2r.codegen.parser.modeling.Template;
+import com.m2r.codegen.parser.templatedef.Template;
 import com.m2r.codegen.parser.templatedef.TemplateDef;
+import com.m2r.mdsl.model.Domain;
+import com.m2r.mdsl.model.DomainAttribute;
+import com.m2r.mdsl.model.DomainList;
+import com.m2r.mdsl.model.ParamValue;
+import com.m2r.mdsl.utils.StringWrapper;
 
 public class GraalvmUtils {
     
@@ -49,9 +44,8 @@ public class GraalvmUtils {
 
     public static void scanAllMethods() {        
         try {
-            List<String> packages = Arrays.asList("com.m2r.codegen.parser.el", 
-                "com.m2r.codegen.parser.modeling", 
-                "com.m2r.codegen.parser.templatedef", 
+            List<String> packages = Arrays.asList("com.m2r.codegen.parser.el",
+                "com.m2r.codegen.parser.templatedef",
                 "com.m2r.codegen.parser.templatedefold");
 
             String content = "[\n";

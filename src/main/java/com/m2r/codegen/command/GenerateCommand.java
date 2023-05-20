@@ -2,15 +2,15 @@ package com.m2r.codegen.command;
 
 import com.m2r.codegen.parser.el.ElContext;
 import com.m2r.codegen.parser.el.ElExpr;
-import com.m2r.codegen.parser.modeling.Domain;
-import com.m2r.codegen.parser.modeling.DomainList;
-import com.m2r.codegen.parser.modeling.ModelingParser;
-import com.m2r.codegen.parser.modeling.ParamValue;
 import com.m2r.codegen.parser.templatedef.*;
 import com.m2r.codegen.parser.templatedefold.TemplateParser;
 import com.m2r.codegen.parser.templatedefold.TemplateProcess;
 import com.m2r.codegen.utils.ConsoleUtils;
 import com.m2r.codegen.utils.DirFileUtils;
+import com.m2r.mdsl.model.Domain;
+import com.m2r.mdsl.model.DomainList;
+import com.m2r.mdsl.model.ParamValue;
+import com.m2r.mdsl.parser.ModelParser;
 import picocli.CommandLine;
 import java.io.*;
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class GenerateCommand implements Runnable {
 
     private DomainList parseScript(String fileName) throws Exception {
         Reader reader = new FileReader(new File(DirFileUtils.getModelingDir(), fileName));
-        return ModelingParser.parse(reader);
+        return ModelParser.parse(reader);
     }
 
     private void generate(DomainList domainList, TemplateDef templateDef, List<File> filesGenerated) throws Exception {

@@ -1,6 +1,6 @@
 package com.m2r.codegen.parser.el;
 
-import com.m2r.codegen.parser.modeling.StringWrapper;
+import com.m2r.mdsl.utils.StringWrapper;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
