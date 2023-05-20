@@ -15,7 +15,7 @@ public class ConsoleUtils {
     }
 
     public static void printError(String msg) {
-        println("\u001B[32m[error]\u001B[0m " + msg);
+        println("\u001B[91m[error]\u001B[0m " + msg);
     }
 
     public static void printUninitializedError() {

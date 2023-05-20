@@ -77,7 +77,7 @@ public class InitCommand implements Runnable {
             }
         }
         catch (Exception e) {
-            throw new RuntimeException("Error copying base directory: " + e.getMessage());
+            throw new RuntimeException("Error copying base directory: " + e.getMessage(), e);
         }
         finally {
             if (DirFileUtils.getTempDir().exists()) {

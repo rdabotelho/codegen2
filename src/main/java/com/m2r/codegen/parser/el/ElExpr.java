@@ -55,7 +55,9 @@ public class ElExpr {
 
     private static Object getValue(Object parent, String attributeName, ElContext context) throws Exception {
         StringWrapper an = StringWrapper.of(attributeName);
-        Method[] methods =  parent.getClass().getDeclaredMethods();
+        Object realParent = parent instanceof String ? StringWrapper.of((String) parent) : parent;
+
+        Method[] methods =  realParent.getClass().getDeclaredMethods();
         Method method = Arrays.stream(methods)
                 .filter(it -> {
                     return it.getName().equals(String.format("get%s", an.toPascalCase())) ||
@@ -64,7 +66,8 @@ public class ElExpr {
                 })
                 .findFirst()
                 .orElse(null);
-        return method != null ? method.invoke(parent) : resolveAlternativeMethod(parent, attributeName, context);
+
+        return method != null ? method.invoke(realParent) : resolveAlternativeMethod(realParent, attributeName, context);
     }
 
     private static Object resolveAlternativeMethod(Object parent, String attributeName, ElContext context) throws Exception {
@@ -84,9 +87,13 @@ public class ElExpr {
         }
 
         if (result == null) {
-            Method getParamMethod = parent.getClass().getDeclaredMethod("getParam", String.class);
-            if (getParamMethod != null) {
-                return getParamMethod.invoke(parent, attributeName);
+            try {
+                Method getParamMethod = parent.getClass().getDeclaredMethod("getParam", String.class);
+                if (getParamMethod != null) {
+                    return getParamMethod.invoke(parent, attributeName);
+                }
+            }
+            catch (NoSuchMethodException e) {
             }
         }
 
