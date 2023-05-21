@@ -2,3 +2,5 @@
 .DS_Store
 /target/**/*
 /.vscode/**/*
+./graalvm/input/*
+./graalvm/output/*

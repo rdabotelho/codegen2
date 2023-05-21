@@ -70,11 +70,7 @@ public class GraalvmUtils {
         String json = "{\n" +
             "\t\"name\":\"" + clazz.getName() +"\",\n" +
             "\t\"allDeclaredFields\":true,\n" +
-            "\t\"queryAllDeclaredMethods\":true,\n" +
-            "\t\"queryAllPublicMethods\":true,\n" +
             "\t\"allDeclaredClasses\": true,\n" +
-            "\t\"queryAllDeclaredConstructors\": true,\n" +
-            "\t\"queryAllPublicConstructors\": true,\n" +
             "\t\"allPublicClasses\": true,\n" +
             "\t\"methods\":[\n" +
             "\t\t{\"name\":\"<init>\", \"parameterTypes\":[] }";
