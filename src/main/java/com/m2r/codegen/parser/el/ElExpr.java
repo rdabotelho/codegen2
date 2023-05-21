@@ -7,9 +7,26 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ElExpr {
+
+    private static Pattern DYNAMIC_REMOVE_PATTERN = Pattern.compile("remove(\\w+)");
+    private static Pattern DYNAMIC_CONVERT_PATTERN = Pattern.compile("convert(\\w+)To(\\w+)");
+    private static Map<String, String> DYNAMIC_PARAMS_MAP;
+
+    static {
+        DYNAMIC_PARAMS_MAP = new HashMap<>();
+        DYNAMIC_PARAMS_MAP.put("Space", " ");
+        DYNAMIC_PARAMS_MAP.put("Dot", "\\.");
+        DYNAMIC_PARAMS_MAP.put("Slash", "/");
+        DYNAMIC_PARAMS_MAP.put("Underscore", "_");
+        DYNAMIC_PARAMS_MAP.put("Dash", "-");
+    }
 
     public static String resolve(ElContext context, String expr) {
         Reader reader = new StringReader(expr);
@@ -56,6 +73,15 @@ public class ElExpr {
     private static Object getValue(Object parent, String attributeName, ElContext context) throws Exception {
         StringWrapper an = StringWrapper.of(attributeName);
         Object realParent = parent instanceof String ? StringWrapper.of((String) parent) : parent;
+
+        if (realParent instanceof StringWrapper) {
+            if (attributeName.startsWith("remove")) {
+                return callDynamicRemove((StringWrapper) realParent, attributeName);
+            }
+            else if (attributeName.startsWith("convert")) {
+                return callDynamicConvert((StringWrapper) realParent, attributeName);
+            }
+        }
 
         Method[] methods =  realParent.getClass().getDeclaredMethods();
         Method method = Arrays.stream(methods)
@@ -125,6 +151,38 @@ public class ElExpr {
             return null;
         }
         return parent.toString().equals(param1);
+    }
+
+    private static String callDynamicRemove(StringWrapper parent, String attributeName) {
+        if (parent == null) {
+            return null;
+        }
+        Matcher matcher = DYNAMIC_REMOVE_PATTERN.matcher(attributeName);
+        if (matcher.find()) {
+            String param = matcher.group(1);
+            String regex = DYNAMIC_PARAMS_MAP.get(param);
+            if (param != null && regex != null) {
+                return parent.replace(regex, "");
+            }
+        }
+        return null;
+    }
+
+    private static String callDynamicConvert(StringWrapper parent, String attributeName) {
+        if (parent == null) {
+            return null;
+        }
+        Matcher matcher = DYNAMIC_CONVERT_PATTERN.matcher(attributeName);
+        if (matcher.find()) {
+            String param1 = matcher.group(1);
+            String param2 = matcher.group(2);
+            String regex = DYNAMIC_PARAMS_MAP.get(param1);
+            String replaciment = DYNAMIC_PARAMS_MAP.get(param2);
+            if (param1 != null && param2 != null && regex != null && replaciment != null) {
+                return parent.replace(regex, replaciment);
+            }
+        }
+        return null;
     }
 
 }

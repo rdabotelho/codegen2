@@ -1,6 +1,7 @@
 package com.m2r.codegen.command;
 
 import com.m2r.codegen.parser.el.ElContext;
+import com.m2r.codegen.parser.el.ElExpr;
 import com.m2r.codegen.parser.templatedef.Attribute;
 import com.m2r.codegen.parser.templatedef.TemplateDef;
 import com.m2r.codegen.parser.templatedef.TemplateDefParser;
@@ -11,8 +12,8 @@ import com.m2r.codegen.utils.TemplateRepo;
 import org.apache.commons.io.FileUtils;
 import picocli.CommandLine;
 import java.io.*;
-import java.util.Arrays;
-import java.util.Properties;
+import java.nio.file.*;
+import java.util.*;
 
 @CommandLine.Command(name = "init")
 public class InitCommand implements Runnable {
@@ -25,6 +26,8 @@ public class InitCommand implements Runnable {
 
     @CommandLine.Option(names = { "-p", "--properties" }, description = "the archive file")
     private File properties;
+
+    private Map<String, TemplateDef> templatesProcessed = new HashMap<>();
 
     @Override
     public void run() {
@@ -65,12 +68,15 @@ public class InitCommand implements Runnable {
                 configProperties.load(new FileInputStream(configFile));
                 if (userPropertiesFile == null) {
                     configProperties.forEach((key, value) -> {
-                        String newValue = ConsoleUtils.printAndReadOption( key + " [" + value + "]");
+                        String def = value != null && !value.equals("") ? " [" + value + "]" : "";
+                        String newValue = ConsoleUtils.printAndReadOption( key + def);
                         configProperties.put(key, newValue.isEmpty() ? value : newValue);
                     });
                 }
                 configProperties.store(new FileOutputStream(targetConfigFile), null);
+                templatesProcessed.clear();
                 copyBaseFilesToHome(DirFileUtils.getTempDir(), DirFileUtils.getHomeDir());
+                removeAllEmptyDirs();
             }
             else {
                 cloneCodegenProject();
@@ -118,7 +124,10 @@ public class InitCommand implements Runnable {
                 copyBaseFilesToHome(source, dir);
             }
             else {
-                FileUtils.copyFileToDirectory(source, destDir, true);
+                TemplateDef templateDef = templatesProcessed.get(source.getPath());
+                if (templateDef == null) {
+                    FileUtils.copyFileToDirectory(source, destDir, true);
+                }
             }
         }
     }
@@ -129,7 +138,14 @@ public class InitCommand implements Runnable {
         try {
             reader = new FileReader(templateDefFile);
             TemplateDef templateDef = TemplateDefParser.parse(reader);
+
             Attribute sourceFile = templateDef.getAttributeByName("sourceFile");
+            if (sourceFile == null)
+                throw new RuntimeException("sourceFile attribute required!");
+            Attribute targetFile = templateDef.getAttributeByName("targetFile");
+            if (targetFile == null)
+                throw new RuntimeException("targetFile attribute required!");
+
             File templateFile = new File(templateDefFile.getParentFile(), sourceFile.getValue());
             TemplateProcess processor = GenerateCommand.parseTemplateDef(templateDef, templateFile);
 
@@ -137,8 +153,15 @@ public class InitCommand implements Runnable {
             context.loadFromPropertiesFile();
             processor.getContext().inheritContext(context);
 
-            writer = new FileWriter(templateFile);
+            File templateFileTarget = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
+            if (!templateFileTarget.getParentFile().exists()) {
+                templateFileTarget.getParentFile().mkdirs();
+            }
+
+            writer = new FileWriter(templateFileTarget);
             processor.process(writer);
+
+            templatesProcessed.put(templateFile.getPath(), templateDef);
         }
         finally {
             if (writer != null) {
@@ -147,6 +170,30 @@ public class InitCommand implements Runnable {
             if (reader != null) {
                 reader.close();
             }
+        }
+    }
+
+    public void removeAllEmptyDirs() {
+        Path directoryPath = DirFileUtils.getHomeDir().toPath();
+        try {
+            Files.walkFileTree(directoryPath, new SimpleFileVisitor<>() {
+                @Override
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    if (Files.isDirectory(dir) && isEmptyDirectory(dir)) {
+                        Files.delete(dir);
+                    }
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isEmptyDirectory(Path directory) throws IOException {
+        try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(directory)) {
+            return !dirStream.iterator().hasNext();
         }
     }
 

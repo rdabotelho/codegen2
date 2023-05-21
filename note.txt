@@ -1,0 +1,5 @@
+# RELEASE NEWS
+
+1. New dynamics methods
+ - remove* (Space, Dot, Slash, Underscore, Dash)
+ - convert*To* (Space, Dot, Slash, Underscore, Dash)

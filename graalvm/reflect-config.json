@@ -98,7 +98,8 @@
 		{"name":"toKebabLowerCase", "parameterTypes":[] },
 		{"name":"toKebabUpperCase", "parameterTypes":[] },
 		{"name":"camelCase", "parameterTypes":[] },
-		{"name":"toPascalCase", "parameterTypes":[] }
+		{"name":"toPascalCase", "parameterTypes":[] },
+		{"name":"replace", "parameterTypes":["java.lang.String","java.lang.String"] }
 	]
 },
 {
