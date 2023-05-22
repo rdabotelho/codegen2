@@ -12,6 +12,3 @@ cp resource-config.json $OUTPUT_DIR
 
 docker run --rm -v $INPUT_DIR/$ARTIFACT.jar:/opt/$ARTIFACT.jar -v $OUTPUT_DIR:/opt/output -it mcr.microsoft.com/windows/servercore:ltsc2019 \
 bash
-
-#rm $OUTPUT_DIR/reflect-config.json
-#rm $OUTPUT_DIR/resource-config.json
