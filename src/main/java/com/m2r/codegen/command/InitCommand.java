@@ -24,7 +24,7 @@ public class InitCommand implements Runnable {
     @CommandLine.Parameters(index = "1", defaultValue = "master")
     private String gitBranch;
 
-    @CommandLine.Option(names = { "-p", "--properties" }, description = "the archive file")
+    @CommandLine.Option(names = { "-p", "--properties" }, description = "Properties file")
     private File properties;
 
     private Map<String, TemplateDef> templatesProcessed = new HashMap<>();
