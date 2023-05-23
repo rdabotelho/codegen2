@@ -98,34 +98,30 @@ template {
 
 To install codegen 2.0, you need to download the `codegen.zip` file in the link below and follow the next steps (for each OS).
 
-[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.0.2)
+[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.1.0)
 
-### macOS / Linux
+#### macOS / Linux
 
 1. Extract the codegen zip file into the home directory `~/`.
-2. Give execution permission to the `codegen` file.
-```shell
-chmod +x ~/codegen/codegen
-```
-3. Add codegen directory to the OS path.
+2. Add codegen directory to the OS path.
 ```shell
 export PATH=$PATH:~/codegen
 ```
 >**Note:** It is important to include this script in an initialization file to keep the directory in the path.
-4. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
+3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.0.2
+Version: 2.1.0
 ```
 
-### Windows
+#### Windows
 
 1. Extract the codegen zip file into the home directory `~/`.
 2. Add codegen directory to the OS path (Environment variable -> User variables -> Path).
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.0.2
+Version: 2.1.0
 ```
 
 ## Usage
@@ -176,7 +172,7 @@ To create a modeling file, run the following command: `codegen create-model <FIL
 
 Example:
 ```bash
-codegen create-model entity.md
+codegen create-model entity.mdsl
 ```
 
 See that one file was created in the folder `.codegen/modeling`.
@@ -198,7 +194,7 @@ To do code generation, use the following command: `codegen generate <MODELING-FI
 
 Example (if you haven't deleted the code generated in the previous examples):
 ```bash
-codegen generate entity.md
+codegen generate entity.mdsl
 ```
 
 See that one file was created in the folder `src/main/java/com/m2r/example/entity`.
@@ -222,13 +218,13 @@ public class HelloWorld {
 
 The following is a list of the commands available in the codegen CLI.
 
-| Command             | Description                                                        | Parameters                                                                       | Options                            |
-|---------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------|------------------------------------|
-| **init**            | Initialize a codegen project                                       | - git url (optional)<br/>- git branch (optional)                                 |                                    |
-| **create-template** | Create a new template file and template definition file            | - template file name                                                             |                                    |
-| **create-model**    | Create a new modeling file                                         | - model file name                                                                |                                    |
-| **shift**           | Shift blocks' lines automatically in the template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse |
-| **generate**        | Generate files based on templates                                  | - model file name                                                                | **-f or --force:** Force override  |
+| Command             | Description                                                        | Parameters                                                                       | Options                                 |
+|---------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------|
+| **init**            | Initialize a codegen project                                       | - git url (optional)<br/>- git branch (optional)                                 | **-p or --properties:** Properties file |
+| **create-template** | Create a new template file and template definition file            | - template file name                                                             |                                         |
+| **create-model**    | Create a new modeling file                                         | - model file name                                                                |                                         |
+| **shift**           | Shift blocks' lines automatically in the template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse      |
+| **generate**        | Generate files based on templates                                  | - model file name                                                                | **-f or --force:** Force override       |
 
 ## Codegen Engine
 
@@ -242,60 +238,29 @@ For the generation of the final file, the codegen has an engine that implements 
 
 The modeling file is the artifact where the user models its domain, which will be the input for the modeling file processing.
 
-#### DSL of Modeling File
+To implement the modeling file, the codegen uses the lib Model DSL, where the user structure its entities, enumeration and relationships, which will be used to make the template definition file.
 
-To implement the modeling file, the codegen provides its own domain-specific language (DSL) where the user structure its entities, enumeration and relationships, which will be used to make the template definition file.
+Learn more about [Model DSL](https://github.com/rdabotelho/model-dsl/blob/master/README.md)
 
-#### DSL Syntax
+#### Dynamic methods in StringWrapper Class
 
-```bash
-entity EntityName {
-    String attribute1
-    Integer attribute2 (param1: 'value')
-    Boolean attribute3 (param1: 'value', param2: 'value')
-    List<OtherEntity> attribute4 (param1: 'value', param2: 'value',...)
-    :
-}
+In addition to the native methods of the `StringWrapper` class (lib Model DSL), codegen implements some dynamic methods to facilitate string handling within the template definition file.
 
-entity OtherEntity (param1: 'value', param2: 'value',...) {
-    String attribute1
-    Date attribute2
-    EnumName attribute3
-    :
-}
+**To use on any attribute**
 
-enum EnumName {
-    ENUM_VALUE1
-    ENUM_VALUE2
-    ENUM_VALUE3
-    :
-}
-```
+| Method Prefix   | Method Sufix Options                | Example          | 
+|-----------------|-------------------------------------|------------------|
+| **remove?**     | Space, Dot, Slash, Underscore, Dash | removeSpace      |
+| **convert?To?** | Space, Dot, Slash, Underscore, Dash | convertDotToDash |
 
-#### Modeling Metadata
+**To use in the methods: `showIf` and `replaceIf` (on template definition)**
 
-The result of modeling file processing is the modeling metadata, that will be one of the entries of the template definition file processing.
-
-This metadata is presented in the following diagram.
-
-![domain diagram](domain.png)
-
-#### StringWrapper Class
-
-For all string values, codegen provides an helper class, called `StringWrapper`, that assist in the treatment of string values in the template definition file coding.
-
-![string wrapper diagram](string-wrapper.png)
-
-| attribute          | Example     | 
-|--------------------|-------------|
-| **camelCase**      | helloWorld  |
-| **pascalCase**     | HelloWorld  |
-| **snakeLowerCase** | hello_world |
-| **snakeUpperCase** | HELLO_WORLD |
-| **kebabLowerCase** | hello-world |
-| **kebabUpperCase** | HELLO-WORLD |
-| **lowerCase**      | helloworld  |
-| **upperCase**      | HELLOWORLD  |
+| Method          | Parameter | Example                            | 
+|-----------------|-----------|------------------------------------|
+| **contains**    | Value     | domain.attributes.contains, 'enum' |
+| **noContains**  | Value     | domain.attributes.contains, 'list' |
+| **equals**      | Value     | domain.table.notEquals, 'enum'     |
+| **notEquals**   | Value     | domain.table.notEquals, 'list'     |
 
 ### Template Definition File
 
@@ -371,84 +336,86 @@ class User {
 
 ## Practical Case
 
-To present in a practical way the main benefits of the codegen 2.0, let's create a microservice in Spring Boot and do all the model class generation (entity, enumeration, repository and REST resource).
+To present in a practical way the main benefits of the codegen 2.0, let's create a microservice in Spring Boot and do all the model class generation (entity, enumeration, dto, mapper, repository, service and REST controller).
 
-The purpose of our microservice is to expose a customer entity REST API and persist its data in an H2 database.
-
-### Spring Initializer
-
-To get started, go to site [Spring Initializer](https://start.spring.io/), and create a microservice project with the following characteristics:
-
-- **Project:** Maven Project
-- **Language:** Java
-- **Spring Boot:** 2.7.2
-- **Java Version:** 8 (tested)
-- **Dependencies:**
-  - Spring Web
-  - Spring Data JPA
-  - H2 Database
+The purpose of our microservice is to expose an article entity REST API and persist its data in an H2 database.
 
 ### Codegen initialization
 
-After opening the project in an IDE of your preference and having already installed the codegen in your OS (installation section), run the startup command.
+After the codegen installation in your OS (installation section), create a new directory and run the `init` command to generate the microservice initializer.
 
 ```bash
-codegen init https://github.com/rdabotelho/codegen-archetype.git spring-boot-java-h2
+mkdir example
+cd example
+```
+
+```bash
+codegen init https://github.com/rdabotelho/codegen-archetype.git spring-boot-3.1.0-java-17-v1
 ```
 
 >**Note:** To speed up the process, we used the templates already created for this example in the repository `codegen-archetype.git`. After initialization, feel free to make improvements.
 
-After initialization, we can see the template files for `entity`, `enum`, `repository` and `resource`.
+After the initialization, in addition to the spring boot files and folders, the `init` command also created the `codegen` hidden folder with its settings (config.properties, modelling folder and templates folder).
 
 ```bash
 - .codegen
-  + modeling
+    config.properties
+  - modeling
+      model.mdsl
   - templates
       entity.df
       entity.java
       enum.df
       enum.java
+      mapper.df
+      mapper.java
+      dto.df
+      dto.java      
       repository.df
       repository.java
-      resource.df
-      resource.java
-    config.properties
+      service.df
+      service.java
+      controller.df
+      controller.java
 ```
 
 >**Note:** If you change some of these template files, don't forget to use the command `codegen shift` to adjust the lines of the blocks in the template definition files.
 
-### Creation of the customer entity
+### Properties File
 
-Create the modeling file `model.md`
+The properties file is used to the project initialization. In this example, the property file is `.codegen/config.properties`.
 
 ```bash
-codegen create-model model.md
+PROJECT_NAME=HelloWorld
+PACKAGE=com.example.demo
 ```
 
-Replace the content of the generated file `.codegen/modeling/model.md` for the following content.
+### Template Modelling File
+
+The template has a **Modelling File** example in the path `.codegen/modeling/model.mdsl` with the following content.
 
 ```bash
-entity Customer {
-    String name
-    Gender gender
-    LocalDate birthDate
-    String address
-    String city
-    String state
+entity Article {
+	String title
+	String text
+	String author
+	Date date
+	StatusEnum status
 }
 
-enum Gender {
-    MALE
-    FEMALE
+enum StatusEnum {
+	CREATED
+	EVALUATED
+	PUBLISHED
 }
 ```
 
-### Generation of the microservice classes
+### Generation of the microservice classes from the **Modelling File**
 
-Now let's generate our classes of `entity`, `enum`, `repository` and `resource`.
+Now let's generate our classes: `entity`, `enum`, `mapper`, `dto`, `repository`, `service` and `controller` from the `model.mdsl` file.
 
 ```bash
-codegen generate model.md
+codegen generate model.mdsl
 ```
 
 As we can see, the codegen generated all the necessary classes for run our microservice.
@@ -460,54 +427,61 @@ As we can see, the codegen generated all the necessary classes for run our micro
       - com
         - example
           - demo
-            - model
-              Customer.java
-            - enums
-              Gender.java
+            - domain
+              - model
+                Article.java
+              - enums
+                StatusEnum.java
+              - dto
+                ArticleDto.java
+              - mapper
+                ArticleMapper.java
             - repository
-              CustomerRepository.java
-            - web
-              - rest
-                CustomerResource.java  
+              ArticleRepository.java
+            - service
+              ArticleService.java
+            - controller
+              ArticleController.java  
 ```
 
 ### Running the microservice
 
-To run our microservice, just run the `DemoApplication.java` class.
+Now our microsservice is done! To run its, just to call the command: `mvn spring-boot:run`.
+
+>**Note:** Make sure you use Java 17
 
 To test, open a terminal of your choice and call the POST endpoint to insert a new customer.
 
 ```bash
-curl --location --request POST 'http://localhost:8080/api/customers' \
+curl --location --request POST 'http://localhost:8080/api/articles' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-	"name": "Albert Einstein",
-	"gender": "MALE",
-	"birthDate": "1879-03-14",
-	"address": "Am Waldrand Schwielowsee",
-	"city": "Ulm",
-	"state": "BD"
+	"title": "Relativity",
+	"text": "The Special and General Theory",
+    "author": "Albert Einstein",
+	"date": "1916-01-01",
+	"status": "PUBLISHED"
 }'
 ```
 
 now, query the customers by calling GET endpoint.
 
 ```bash
-curl --location --request GET 'http://localhost:8080/api/customers'
+curl --location --request GET 'http://localhost:8080/api/articles'
 ```
 
 The result will be the customer persisted in the H2 database previously.
 
 ```bash
 [
-  {
-	"name": "Albert Einstein",
-	"gender": "MALE",
-	"birthDate": "1879-03-14",
-	"address": "Am Waldrand Schwielowsee",
-	"city": "Ulm",
-	"state": "BD"
-  }
+    {
+        "id": 1,
+        "title": "Relativity",
+        "text": "The Special and General Theory",
+        "author": "Albert Einstein",
+        "date": "1916-01-01",
+        "status": "PUBLISHED"
+    }
 ]
 ```
 

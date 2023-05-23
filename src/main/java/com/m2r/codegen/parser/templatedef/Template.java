@@ -1,4 +1,6 @@
-package com.m2r.codegen.parser.modeling;
+package com.m2r.codegen.parser.templatedef;
+
+import com.m2r.mdsl.model.Domain;
 
 import java.io.File;
 

@@ -2,15 +2,15 @@ package com.m2r.codegen.command;
 
 import com.m2r.codegen.parser.el.ElContext;
 import com.m2r.codegen.parser.el.ElExpr;
-import com.m2r.codegen.parser.modeling.Domain;
-import com.m2r.codegen.parser.modeling.DomainList;
-import com.m2r.codegen.parser.modeling.ModelingParser;
-import com.m2r.codegen.parser.modeling.ParamValue;
 import com.m2r.codegen.parser.templatedef.*;
 import com.m2r.codegen.parser.templatedefold.TemplateParser;
 import com.m2r.codegen.parser.templatedefold.TemplateProcess;
 import com.m2r.codegen.utils.ConsoleUtils;
 import com.m2r.codegen.utils.DirFileUtils;
+import com.m2r.mdsl.model.Domain;
+import com.m2r.mdsl.model.DomainList;
+import com.m2r.mdsl.model.ParamValue;
+import com.m2r.mdsl.parser.ModelParser;
 import picocli.CommandLine;
 import java.io.*;
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class GenerateCommand implements Runnable {
                 DomainList domainList = parseScript(modelFile);
                 TemplateDef template = parseTemplate(templateFile.getName());
                 generate(domainList, template, filesGenerated);
-                filesGenerated.stream().forEach(it -> ConsoleUtils.printSuccess(String.format("File '%s' generated!", it.getName())));
+                filesGenerated.stream().forEach(it -> ConsoleUtils.printSuccess(String.format("File \u001B[33m'%s'\u001B[0m generated!", it.getName())));
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -59,7 +59,7 @@ public class GenerateCommand implements Runnable {
     private DomainList parseScript(String fileName) throws Exception {
         Reader reader = new FileReader(new File(DirFileUtils.getModelingDir(), fileName));
         try {
-            return ModelingParser.parse(reader);
+            return ModelParser.parse(reader);
         }
         finally {
             reader.close();
@@ -86,7 +86,7 @@ public class GenerateCommand implements Runnable {
 
             File file = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
             if (file.exists() && !force) {
-                String option = ConsoleUtils.printAndReadOption("Override '" + file.getName() + "' file (N/y): ");
+                String option = ConsoleUtils.printAndReadOption("Override \u001B[92m'" + file.getName() + "'\u001B[0m file (N/y): ");
                 if (!option.equalsIgnoreCase("y")) {
                     return;
                 }
@@ -124,7 +124,7 @@ public class GenerateCommand implements Runnable {
 
             File file = new File(DirFileUtils.getHomeDir(),  ElExpr.resolve(context, targetFile.getValue()));
             if (file.exists() && !force) {
-                String option = ConsoleUtils.printAndReadOption("Override '" + file.getName() + "' file (N/y): ");
+                String option = ConsoleUtils.printAndReadOption("Override \u001B[92m'" + file.getName() + "'\u001B[0m file (N/y): ");
                 if (!option.equalsIgnoreCase("y")) {
                     continue;
                 }
