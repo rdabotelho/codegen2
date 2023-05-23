@@ -246,10 +246,21 @@ Learn more about [Model DSL](https://github.com/rdabotelho/model-dsl/blob/master
 
 In addition to the native methods of the `StringWrapper` class (lib Model DSL), codegen implements some dynamic methods to facilitate string handling within the template definition file.
 
+**To use on any attribute**
+
 | Method Prefix   | Method Sufix Options                | Example          | 
 |-----------------|-------------------------------------|------------------|
 | **remove?**     | Space, Dot, Slash, Underscore, Dash | removeSpace      |
 | **convert?To?** | Space, Dot, Slash, Underscore, Dash | convertDotToDash |
+
+**To use in the methods: `showIf` and `replaceIf` (on template definition)**
+
+| Method          | Parameter | Example                            | 
+|-----------------|-----------|------------------------------------|
+| **contains**    | Value     | domain.attributes.contains, 'enum' |
+| **noContains**  | Value     | domain.attributes.contains, 'list' |
+| **equals**      | Value     | domain.table.notEquals, 'enum'     |
+| **notEquals**   | Value     | domain.table.notEquals, 'list'     |
 
 ### Template Definition File
 
