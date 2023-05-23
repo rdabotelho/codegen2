@@ -8,7 +8,7 @@ public class InfoCommand implements Runnable {
 
     @Override
     public void run() {
-        String version = "2.1.0";
+        String version = "2.1.1-SNAPSHOT";
         ConsoleUtils.println("\u001B[92mCodegen\u001B[0m command line interface (CLI)\nVersion: \u001B[93m" + version + "\u001B[0m");
     }
 
