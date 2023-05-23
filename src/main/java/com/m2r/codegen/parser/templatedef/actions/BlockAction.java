@@ -24,7 +24,7 @@ public class BlockAction implements MethodAction {
             if (subMethod.isBlock()) {
                 subMethod.getBlock().getContext().inheritContext(method.getBlock().getContext());
             }
-            subMethod.process();
+            subMethod.process(state.getIndex(), state.getSize());
         }
         List<Block> blocks = method.getMethods().stream()
                 .filter(it -> it.isBlock())

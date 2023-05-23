@@ -1,0 +1,891 @@
+[
+    {
+      "name":"com.m2r.codegen.Main",
+      "allDeclaredFields":true
+    },
+    
+    
+    {
+        "name":"com.m2r.codegen.parser.el.ElExpr",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"lambda$resolve$0", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.String"] },
+            {"name":"equals", "parameterTypes":["java.lang.Object","java.lang.String","com.m2r.codegen.parser.el.ElContext"] },
+            {"name":"contains", "parameterTypes":["java.lang.Object","java.lang.String","com.m2r.codegen.parser.el.ElContext"] },
+            {"name":"getValue", "parameterTypes":["java.lang.Object","java.lang.String","com.m2r.codegen.parser.el.ElContext"] },
+            {"name":"resolve", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.String"] },
+            {"name":"stringToObject", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.String"] },
+            {"name":"stringToObject", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.String","java.lang.Object"] },
+            {"name":"resolveAlternativeMethod", "parameterTypes":["java.lang.Object","java.lang.String","com.m2r.codegen.parser.el.ElContext"] },
+            {"name":"callDynamicRemove", "parameterTypes":["com.m2r.mdsl.utils.StringWrapper","java.lang.String"] },
+            {"name":"callDynamicConvert", "parameterTypes":["com.m2r.mdsl.utils.StringWrapper","java.lang.String"] },
+            {"name":"lambda$getValue$1", "parameterTypes":["com.m2r.mdsl.utils.StringWrapper","java.lang.reflect.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.el.ElParser",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"exp", "parameterTypes":[] },
+            {"name":"replace", "parameterTypes":["int"] },
+            {"name":"parse", "parameterTypes":["java.io.Reader","java.io.Writer","java.util.function.Function"] },
+            {"name":"property", "parameterTypes":[] },
+            {"name":"consume", "parameterTypes":["int"] },
+            {"name":"getTokenTypes", "parameterTypes":[] },
+            {"name":"newResult", "parameterTypes":[] },
+            {"name":"ignoreToken", "parameterTypes":["com.m2r.easyparser.Parser$Token"] },
+            {"name":"anythingList", "parameterTypes":[] },
+            {"name":"anything", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.el.ElContext",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"get", "parameterTypes":["java.lang.String"] },
+            {"name":"put", "parameterTypes":["java.lang.String","java.lang.Object"] },
+            {"name":"lambda$loadFromPropertiesFile$0", "parameterTypes":["java.lang.Object","java.lang.Object"] },
+            {"name":"loadFromPropertiesFile", "parameterTypes":[] },
+            {"name":"inheritContext", "parameterTypes":["com.m2r.codegen.parser.el.ElContext"] }
+        ]
+    },
+    {
+      "name":"com.m2r.mdsl.utils.StringWrapper",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"toString", "parameterTypes":[] },
+        {"name":"toLowerCase", "parameterTypes":[] },
+        {"name":"toUpperCase", "parameterTypes":[] },
+        {"name":"getValue", "parameterTypes":[] },
+        {"name":"toPackage", "parameterTypes":[] },
+        {"name":"of", "parameterTypes":["java.lang.String"] },
+        {"name":"toPath", "parameterTypes":[] },
+        {"name":"toCamelCase", "parameterTypes":[] },
+        {"name":"toSnakeLowerCase", "parameterTypes":[] },
+        {"name":"toSnakeUpperCase", "parameterTypes":[] },
+        {"name":"toKebabLowerCase", "parameterTypes":[] },
+        {"name":"toKebabUpperCase", "parameterTypes":[] },
+        {"name":"camelCase", "parameterTypes":[] },
+        {"name":"toPascalCase", "parameterTypes":[] },
+        {"name":"replace", "parameterTypes":["java.lang.String","java.lang.String"] }
+      ]
+    },
+    {
+      "name":"com.m2r.mdsl.model.DomainAttribute",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"getName", "parameterTypes":[] },
+        {"name":"toString", "parameterTypes":[] },
+        {"name":"isEnum", "parameterTypes":[] },
+        {"name":"getParent", "parameterTypes":[] },
+        {"name":"getType", "parameterTypes":[] },
+        {"name":"getParam", "parameterTypes":["java.lang.String","java.lang.Boolean"] },
+        {"name":"getParam", "parameterTypes":["java.lang.String"] },
+        {"name":"isBasic", "parameterTypes":[] },
+        {"name":"isList", "parameterTypes":[] },
+        {"name":"getItemType", "parameterTypes":[] },
+        {"name":"isManyToOne", "parameterTypes":[] },
+        {"name":"getParams", "parameterTypes":[] },
+        {"name":"hasParam", "parameterTypes":["java.lang.String"] },
+        {"name":"isEntity", "parameterTypes":[] },
+        {"name":"isOneToOne", "parameterTypes":[] },
+        {"name":"isOneToMany", "parameterTypes":[] },
+        {"name":"isManyToMany", "parameterTypes":[] },
+        {"name":"getTypeDomain", "parameterTypes":[] },
+        {"name":"hasTypeDomain", "parameterTypes":[] }
+      ]
+    },
+    {
+      "name":"com.m2r.mdsl.model.BasicType",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"values", "parameterTypes":[] },
+        {"name":"valueOf", "parameterTypes":["java.lang.String"] },
+        {"name":"getValue", "parameterTypes":[] },
+        {"name":"parse", "parameterTypes":["java.lang.String"] },
+        {"name":"isValid", "parameterTypes":["java.lang.String"] },
+        {"name":"lambda$parse$0", "parameterTypes":["java.lang.String","com.m2r.codegen.parser.modeling.BasicType"] }
+      ]
+    },
+    {
+      "name":"com.m2r.codegen.parser.templatedef.Template",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"getScope", "parameterTypes":[] },
+        {"name":"getName", "parameterTypes":[] },
+        {"name":"getFileName", "parameterTypes":[] },
+        {"name":"getDirectory", "parameterTypes":[] },
+        {"name":"getOutputDir", "parameterTypes":[] },
+        {"name":"getOutputFileName", "parameterTypes":[] },
+        {"name":"getStartEvent", "parameterTypes":[] },
+        {"name":"getEndEvent", "parameterTypes":[] },
+        {"name":"getCreateIf", "parameterTypes":[] }
+      ]
+    },
+    {
+      "name":"com.m2r.mdsl.model.ModelParser",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"type", "parameterTypes":[] },
+        {"name":"exp", "parameterTypes":[] },
+        {"name":"domain", "parameterTypes":[] },
+        {"name":"enumeration", "parameterTypes":[] },
+        {"name":"param", "parameterTypes":[] },
+        {"name":"parse", "parameterTypes":["java.io.Reader"] },
+        {"name":"stringList", "parameterTypes":[] },
+        {"name":"domainList", "parameterTypes":[] },
+        {"name":"ignoreToken", "parameterTypes":["com.m2r.easyparser.Parser$Token"] },
+        {"name":"updateDomainList", "parameterTypes":[] },
+        {"name":"paramValue", "parameterTypes":[] },
+        {"name":"extractString", "parameterTypes":["java.lang.String"] },
+        {"name":"entity", "parameterTypes":[] },
+        {"name":"pidlist", "parameterTypes":[] },
+        {"name":"pid", "parameterTypes":[] },
+        {"name":"paramsList", "parameterTypes":[] },
+        {"name":"attributesList", "parameterTypes":[] },
+        {"name":"atribute", "parameterTypes":[] },
+        {"name":"getTokenTypes", "parameterTypes":[] }
+      ]
+    },
+    {
+      "name":"com.m2r.mdsl.model.DomainList",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"getDomains", "parameterTypes":[] },
+        {"name":"getProjectName", "parameterTypes":[] },
+        {"name":"getDomainByName", "parameterTypes":["java.lang.String"] },
+        {"name":"getBasePackage", "parameterTypes":[] },
+        {"name":"finallyProcess", "parameterTypes":[] }
+      ]
+    },
+    {
+      "name":"com.m2r.mdsl.model.ParamValue",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"toString", "parameterTypes":[] },
+        {"name":"getValue", "parameterTypes":["java.lang.String"] },
+        {"name":"getValue", "parameterTypes":[] },
+        {"name":"hasValue", "parameterTypes":["java.lang.String"] },
+        {"name":"getValues", "parameterTypes":[] },
+        {"name":"lambda$getValue$0", "parameterTypes":["com.m2r.mdsl.utils.StringWrapper"] }
+      ]
+    },
+    {
+      "name":"com.m2r.mdsl.model.Domain",
+      "allDeclaredFields":true,
+      "allDeclaredClasses": true,
+      "allPublicClasses": true,
+      "methods":[
+        {"name":"<init>", "parameterTypes":[] },
+        {"name":"getName", "parameterTypes":[] },
+        {"name":"toString", "parameterTypes":[] },
+        {"name":"isEnum", "parameterTypes":[] },
+        {"name":"getParent", "parameterTypes":[] },
+        {"name":"getType", "parameterTypes":[] },
+        {"name":"getAttributes", "parameterTypes":[] },
+        {"name":"addAttribute", "parameterTypes":["java.lang.String","java.lang.String"] },
+        {"name":"getParam", "parameterTypes":["java.lang.String"] },
+        {"name":"getParam", "parameterTypes":["java.lang.String","java.lang.Boolean"] },
+        {"name":"getAttributeByName", "parameterTypes":["java.lang.String"] },
+        {"name":"finallyProcess", "parameterTypes":[] },
+        {"name":"getParams", "parameterTypes":[] },
+        {"name":"hasParam", "parameterTypes":["java.lang.String"] },
+        {"name":"isEntity", "parameterTypes":[] },
+        {"name":"ifParam", "parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.lang.String"] },
+        {"name":"getCompositionOwner", "parameterTypes":[] },
+        {"name":"hasCompositionOwner", "parameterTypes":[] },
+        {"name":"getGenerations", "parameterTypes":[] },
+        {"name":"getFormName", "parameterTypes":[] },
+        {"name":"getLabel", "parameterTypes":[] },
+        {"name":"getAttrTitle", "parameterTypes":[] },
+        {"name":"getAttrTitleValue", "parameterTypes":[] },
+        {"name":"getAttrSubtitle", "parameterTypes":[] },
+        {"name":"getAttrSubtitleValue", "parameterTypes":[] },
+        {"name":"getSections", "parameterTypes":[] },
+        {"name":"getSearches", "parameterTypes":[] },
+        {"name":"getFilteres", "parameterTypes":[] }
+      ]
+    },  
+    {
+        "name":"com.m2r.codegen.parser.templatedef.DefinedMethod",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"getName", "parameterTypes":[] },
+            {"name":"values", "parameterTypes":[] },
+            {"name":"valueOf", "parameterTypes":["java.lang.String"] },
+            {"name":"findDefinedMethod", "parameterTypes":["java.lang.String"] },
+            {"name":"getAction", "parameterTypes":[] },
+            {"name":"lambda$findDefinedMethod$0", "parameterTypes":["java.lang.String","com.m2r.codegen.parser.templatedef.DefinedMethod"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.Method",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"process", "parameterTypes":["int","int"] },
+            {"name":"process", "parameterTypes":[] },
+            {"name":"getName", "parameterTypes":[] },
+            {"name":"getMethods", "parameterTypes":[] },
+            {"name":"getParent", "parameterTypes":[] },
+            {"name":"getParameters", "parameterTypes":[] },
+            {"name":"create", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","java.lang.String"] },
+            {"name":"isBlock", "parameterTypes":[] },
+            {"name":"getParameter", "parameterTypes":["int"] },
+            {"name":"getParameter", "parameterTypes":["int","com.m2r.codegen.parser.templatedef.Param"] },
+            {"name":"getPos", "parameterTypes":[] },
+            {"name":"getBlock", "parameterTypes":[] },
+            {"name":"restoreBlock", "parameterTypes":[] },
+            {"name":"backupBlock", "parameterTypes":[] },
+            {"name":"createBorder", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","java.lang.Integer","java.lang.Integer"] },
+            {"name":"createRoot", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.TemplateDefParser",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"value", "parameterTypes":[] },
+            {"name":"method", "parameterTypes":[] },
+            {"name":"exp", "parameterTypes":[] },
+            {"name":"flag", "parameterTypes":["int","int"] },
+            {"name":"param", "parameterTypes":[] },
+            {"name":"parse", "parameterTypes":["java.io.Reader"] },
+            {"name":"methodList", "parameterTypes":[] },
+            {"name":"attribute", "parameterTypes":[] },
+            {"name":"getTokenTypes", "parameterTypes":[] },
+            {"name":"ignoreToken", "parameterTypes":["com.m2r.easyparser.Parser$Token"] },
+            {"name":"sem", "parameterTypes":[] },
+            {"name":"paramsBody", "parameterTypes":[] },
+            {"name":"definition", "parameterTypes":[] },
+            {"name":"updateTemplateDefinition", "parameterTypes":["com.m2r.codegen.parser.templatedef.TemplateDefParser"] },
+            {"name":"extractAttribute", "parameterTypes":["com.m2r.codegen.parser.TokenIterator"] },
+            {"name":"extractMethod", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","com.m2r.codegen.parser.TokenIterator"] },
+            {"name":"extractString", "parameterTypes":["java.lang.String"] },
+            {"name":"templateBody", "parameterTypes":[] },
+            {"name":"definitionList", "parameterTypes":[] },
+            {"name":"paramsList", "parameterTypes":[] },
+            {"name":"methodBody", "parameterTypes":[] },
+            {"name":"lambda$sem$0", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"template", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.BlockAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$process$0", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$process$4", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","com.m2r.codegen.parser.templatedefold.Block"] },
+            {"name":"lambda$process$3", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$process$2", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$process$1", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.IterateAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"showContent", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$showContent$2", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$validate$1", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$validate$0", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.ShowIfAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"processThreeParams", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"processTwoParams", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.MaskAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.ReplaceAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"processChildren", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState","java.lang.String"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.MethodAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.ActionState",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"getMethod", "parameterTypes":[] },
+            {"name":"getSize", "parameterTypes":[] },
+            {"name":"create", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"create", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","int","int"] },
+            {"name":"getIndex", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.ReplaceIfAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"processChildren", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState","java.lang.String"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.actions.DelimiterAction",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["com.m2r.codegen.parser.templatedef.actions.ActionState"] },
+            {"name":"validate", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.Attribute",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"getName", "parameterTypes":[] },
+            {"name":"getValue", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.Template",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"getScope", "parameterTypes":[] },
+            {"name":"getName", "parameterTypes":[] },
+            {"name":"getFileName", "parameterTypes":[] },
+            {"name":"getDirectory", "parameterTypes":[] },
+            {"name":"getOutputDir", "parameterTypes":[] },
+            {"name":"getOutputFileName", "parameterTypes":[] },
+            {"name":"getStartEvent", "parameterTypes":[] },
+            {"name":"getEndEvent", "parameterTypes":[] },
+            {"name":"getCreateIf", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.Param",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"toString", "parameterTypes":[] },
+            {"name":"getValue", "parameterTypes":[] },
+            {"name":"resolveValue", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.Object"] },
+            {"name":"isExpr", "parameterTypes":[] },
+            {"name":"getIntegerValue", "parameterTypes":[] },
+            {"name":"resolveValueToString", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.String","java.lang.String"] },
+            {"name":"resolveValueToString", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.String"] },
+            {"name":"resolveValueToBoolean", "parameterTypes":["com.m2r.codegen.parser.el.ElContext","java.lang.Boolean"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedef.TemplateDef",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"getMethods", "parameterTypes":[] },
+            {"name":"getAttributes", "parameterTypes":[] },
+            {"name":"scope", "parameterTypes":["java.lang.String"] },
+            {"name":"findMethodByParam", "parameterTypes":["int","java.lang.String"] },
+            {"name":"getBlockMethods", "parameterTypes":[] },
+            {"name":"lambda$getBlockMethods$3", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$scope$2", "parameterTypes":["java.lang.String","java.lang.String"] },
+            {"name":"lambda$getAttributeByName$1", "parameterTypes":["java.lang.String","com.m2r.codegen.parser.templatedef.Attribute"] },
+            {"name":"lambda$findMethodByParam$0", "parameterTypes":["java.lang.String","com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"getAttributeByName", "parameterTypes":["java.lang.String"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedefold.FileContent",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"getContext", "parameterTypes":[] },
+            {"name":"getBlocks", "parameterTypes":[] },
+            {"name":"getBlockByLine", "parameterTypes":["int"] },
+            {"name":"lambda$getBlockByLine$0", "parameterTypes":["int","com.m2r.codegen.parser.templatedefold.Block"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedefold.TemplateProcess",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"process", "parameterTypes":["java.io.Writer"] },
+            {"name":"getContext", "parameterTypes":[] },
+            {"name":"getRoot", "parameterTypes":[] },
+            {"name":"lambda$process$0", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedefold.TemplateParser",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"exp", "parameterTypes":[] },
+            {"name":"execute", "parameterTypes":["java.io.Reader"] },
+            {"name":"execute", "parameterTypes":["java.io.Reader"] },
+            {"name":"parse", "parameterTypes":["com.m2r.codegen.parser.templatedef.TemplateDef","java.io.Reader"] },
+            {"name":"getTokenTypes", "parameterTypes":[] },
+            {"name":"ignoreToken", "parameterTypes":["com.m2r.easyparser.Parser$Token"] },
+            {"name":"isEnd", "parameterTypes":[] },
+            {"name":"sem", "parameterTypes":[] },
+            {"name":"addBlockMethodContent", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","int","java.util.List"] },
+            {"name":"getLines", "parameterTypes":["java.util.List","com.m2r.codegen.parser.templatedefold.Block","int"] },
+            {"name":"lambda$addBlockMethodContent$2", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$addBlockMethodContent$1", "parameterTypes":["java.util.List","com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"lambda$sem$0", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","com.m2r.codegen.parser.templatedef.Method"] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedefold.Block",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"getMethods", "parameterTypes":[] },
+            {"name":"getMethod", "parameterTypes":[] },
+            {"name":"getContext", "parameterTypes":[] },
+            {"name":"getContent", "parameterTypes":[] },
+            {"name":"create", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method"] },
+            {"name":"backup", "parameterTypes":[] },
+            {"name":"restore", "parameterTypes":[] },
+            {"name":"createWithoutMethod", "parameterTypes":["com.m2r.codegen.parser.templatedef.Method","java.lang.Integer","java.lang.Integer"] },
+            {"name":"isDynamic", "parameterTypes":[] },
+            {"name":"getLineStart", "parameterTypes":[] },
+            {"name":"getLineEnd", "parameterTypes":[] }
+        ]
+    },
+    {
+        "name":"com.m2r.codegen.parser.templatedefold.Content",
+        "allDeclaredFields":true,
+        "allDeclaredClasses": true,
+        "allPublicClasses": true,
+        "methods":[
+            {"name":"<init>", "parameterTypes":[] },
+            {"name":"length", "parameterTypes":[] },
+            {"name":"toString", "parameterTypes":[] },
+            {"name":"append", "parameterTypes":["java.lang.String"] },
+            {"name":"append", "parameterTypes":["com.m2r.codegen.parser.templatedefold.Content"] },
+            {"name":"replace", "parameterTypes":["java.lang.String","java.lang.String"] },
+            {"name":"format", "parameterTypes":["java.lang.String","[Ljava.lang.Object;"] },
+            {"name":"empty", "parameterTypes":[] },
+            {"name":"of", "parameterTypes":["com.m2r.codegen.parser.templatedefold.Content"] },
+            {"name":"of", "parameterTypes":["java.util.List"] },
+            {"name":"clean", "parameterTypes":[] },
+            {"name":"insert", "parameterTypes":["int","java.lang.String"] },
+            {"name":"toLines", "parameterTypes":["int","int"] },
+            {"name":"toLines", "parameterTypes":["int","int","int"] },
+            {"name":"toLines", "parameterTypes":[] },
+            {"name":"lambda$of$0", "parameterTypes":["com.m2r.codegen.parser.templatedefold.Content","java.lang.String"] },
+            {"name":"substitute", "parameterTypes":["com.m2r.codegen.parser.templatedefold.Content"] },
+            {"name":"substitute", "parameterTypes":["java.lang.String"] },
+            {"name":"isVisible", "parameterTypes":[] }
+        ]
+    },
+    
+    
+    {
+      "name":"com.m2r.codegen.command.CreateModelCommand",
+      "allDeclaredFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.m2r.codegen.command.CreateTemplateCommand",
+      "allDeclaredFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.m2r.codegen.command.GenerateCommand",
+      "allDeclaredFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.m2r.codegen.command.InfoCommand",
+      "allDeclaredFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.m2r.codegen.command.InitCommand",
+      "allDeclaredFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.m2r.codegen.command.ShiftCommand",
+      "allDeclaredFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.sun.crypto.provider.AESCipher$General",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.sun.crypto.provider.DHParameters",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.sun.crypto.provider.HmacCore$HmacSHA256",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"com.sun.crypto.provider.TlsMasterSecretGenerator",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"java.lang.Object",
+      "allDeclaredFields":true
+    },
+    {
+      "name":"java.nio.file.Path"
+    },
+    {
+      "name":"java.nio.file.Paths",
+      "methods":[{"name":"get","parameterTypes":["java.lang.String","java.lang.String[]"] }]
+    },
+    {
+      "name":"java.security.AlgorithmParametersSpi"
+    },
+    {
+      "name":"java.security.KeyStoreSpi"
+    },
+    {
+      "name":"java.security.MessageDigestSpi"
+    },
+    {
+      "name":"java.security.SecureRandomParameters"
+    },
+    {
+      "name":"java.security.interfaces.ECPrivateKey"
+    },
+    {
+      "name":"java.security.interfaces.ECPublicKey"
+    },
+    {
+      "name":"java.sql.Connection"
+    },
+    {
+      "name":"java.sql.Driver"
+    },
+    {
+      "name":"java.sql.DriverManager",
+      "methods":[
+        {"name":"getConnection","parameterTypes":["java.lang.String"] }, 
+        {"name":"getDriver","parameterTypes":["java.lang.String"] }
+      ]
+    },
+    {
+      "name":"java.sql.Time"
+    },
+    {
+      "name":"java.sql.Timestamp",
+      "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
+    },
+    {
+      "name":"java.time.Duration",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.Instant",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.LocalDate",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.LocalDateTime",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.LocalTime",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.MonthDay",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.OffsetDateTime",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.OffsetTime",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.Period",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.Year",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.YearMonth",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"java.time.ZoneId",
+      "methods":[{"name":"of","parameterTypes":["java.lang.String"] }]
+    },
+    {
+      "name":"java.time.ZoneOffset",
+      "methods":[{"name":"of","parameterTypes":["java.lang.String"] }]
+    },
+    {
+      "name":"java.time.ZonedDateTime",
+      "methods":[{"name":"parse","parameterTypes":["java.lang.CharSequence"] }]
+    },
+    {
+      "name":"javax.security.auth.x500.X500Principal",
+      "fields":[{"name":"thisX500Name"}],
+      "methods":[{"name":"<init>","parameterTypes":["sun.security.x509.X500Name"] }]
+    },
+    {
+      "name":"org.eclipse.jgit.internal.JGitText",
+      "allPublicFields":true,
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"org.eclipse.jgit.lib.CoreConfig$AutoCRLF",
+      "methods":[{"name":"values","parameterTypes":[] }]
+    },
+    {
+      "name":"org.eclipse.jgit.lib.CoreConfig$CheckStat",
+      "methods":[{"name":"values","parameterTypes":[] }]
+    },
+    {
+      "name":"org.eclipse.jgit.lib.CoreConfig$EOL",
+      "methods":[{"name":"values","parameterTypes":[] }]
+    },
+    {
+      "name":"org.eclipse.jgit.lib.CoreConfig$HideDotFiles",
+      "methods":[{"name":"values","parameterTypes":[] }]
+    },
+    {
+      "name":"org.eclipse.jgit.lib.CoreConfig$SymLinks",
+      "methods":[{"name":"values","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.pkcs12.PKCS12KeyStore",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.pkcs12.PKCS12KeyStore$DualFormatPKCS12",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.DSA$SHA224withDSA",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.DSA$SHA256withDSA",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.JavaKeyStore$JKS",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.NativePRNG",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.SHA",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.SHA2$SHA224",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.SHA2$SHA256",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.SHA5$SHA384",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.SHA5$SHA512",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.provider.X509Factory",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.rsa.PSSParameters",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.rsa.RSAKeyFactory$Legacy",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.rsa.RSAPSSSignature",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.rsa.RSASignature$SHA224withRSA",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.ssl.KeyManagerFactoryImpl$SunX509",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.ssl.SSLContextImpl$DefaultSSLContext",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.ssl.SSLContextImpl$TLSContext",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.ssl.TrustManagerFactoryImpl$PKIXFactory",
+      "methods":[{"name":"<init>","parameterTypes":[] }]
+    },
+    {
+      "name":"sun.security.x509.AuthorityInfoAccessExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.AuthorityKeyIdentifierExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.BasicConstraintsExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.CRLDistributionPointsExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.CertificatePoliciesExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.ExtendedKeyUsageExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.IssuerAlternativeNameExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.KeyUsageExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.NetscapeCertTypeExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.PrivateKeyUsageExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.SubjectAlternativeNameExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    },
+    {
+      "name":"sun.security.x509.SubjectKeyIdentifierExtension",
+      "methods":[{"name":"<init>","parameterTypes":["java.lang.Boolean","java.lang.Object"] }]
+    }
+]
+    
