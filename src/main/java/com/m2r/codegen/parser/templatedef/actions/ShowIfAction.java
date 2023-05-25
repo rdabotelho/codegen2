@@ -30,7 +30,7 @@ public class ShowIfAction implements MethodAction {
         String value = method.getParameter(2).getValue();
         method.getBlock().getContext().put("param1", attribute);
         method.getBlock().getContext().put("param2", value);
-        boolean show = methodParam.resolveValueToBoolean(method.getBlock().getContext(), false);
+        boolean show = state.chainLogicOperation(methodParam.resolveValueToBoolean(method.getBlock().getContext(), false));
         method.getBlock().getContent().setVisible(show);
         if (!show) {
             method.getBlock().getContent().clean();
@@ -42,9 +42,9 @@ public class ShowIfAction implements MethodAction {
         Param methodParam = method.getParameter(0);
         String value = method.getParameter(1).getValue();
         method.getBlock().getContext().put("param1", value);
-        boolean show = methodParam.resolveValueToBoolean(method.getBlock().getContext(), false);
+        boolean show = state.chainLogicOperation(methodParam.resolveValueToBoolean(method.getBlock().getContext(), false));
         method.getBlock().getContent().setVisible(show);
-        if (!show) {
+        if (!show && state.isLastShowIf()) {
             method.getBlock().getContent().clean();
             method.getBlock().getContent().setVisible(false);
         }

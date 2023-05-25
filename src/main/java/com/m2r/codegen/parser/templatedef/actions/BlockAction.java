@@ -9,13 +9,24 @@ public class BlockAction implements MethodAction {
 
     @Override
     public void validate(Method method) throws RuntimeException {
-        if (method.getParameters().size() != 2)
-            throw new RuntimeException("Block method required 2 parameters (startLine and endLine)") ;
+        if (method.getParameters().size() < 3)
+            throw new RuntimeException("Block method required 2 or 3 parameter: \n" +
+                    "- startLine\n- endLine\n- logicalOperator (default AND)") ;
     }
 
     @Override
     public void process(ActionState state) throws Exception {
         Method method = state.getMethod();
+        LogicalOperator logicalOperator = LogicalOperator.AND;
+        if (method.getParameters().size() >= 3) {
+            String operator = method.getParameter(2).getValue();
+            logicalOperator = LogicalOperator.of(operator);
+        }
+        int showIfCount = method.getMethods().stream()
+                .filter(it -> it.getName().equals("showIf"))
+                .collect(Collectors.toList()).size();
+        state.setLogicalOperator(logicalOperator, showIfCount);
+        state.setLogicState(LogicalOperator.AND.equals(logicalOperator));
         method.getMethods().stream().filter(it -> it.isBlock()).forEach(it -> {
             it.restoreBlock();
             it.backupBlock();
@@ -24,7 +35,7 @@ public class BlockAction implements MethodAction {
             if (subMethod.isBlock()) {
                 subMethod.getBlock().getContext().inheritContext(method.getBlock().getContext());
             }
-            subMethod.process(state.getIndex(), state.getSize());
+            subMethod.process(state);
         }
         List<Block> blocks = method.getMethods().stream()
                 .filter(it -> it.isBlock())
