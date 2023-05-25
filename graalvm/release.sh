@@ -14,7 +14,7 @@ cd output
 mkdir codegen
 cp codegen-linux codegen/codegen
 echo $INFO | tee codegen/installation.txt > /dev/null
-zip -r release-linux.zip codegen
+zip -r codegen-linux.zip codegen
 rm -Rf codegen
 
 # Macos
@@ -22,7 +22,14 @@ cd output
 mkdir codegen
 cp codegen-macos codegen/codegen
 echo $INFO | tee codegen/installation.txt > /dev/null
-zip -r release-macos.zip codegen
+zip -r codegen-macos.zip codegen
+rm -Rf codegens
+
+# Window
+cd output
+mkdir codegen
+cp ../../target/codegen/* codegen
+zip -r codegen-windows.zip codegen
 rm -Rf codegen
 
 # Finish
