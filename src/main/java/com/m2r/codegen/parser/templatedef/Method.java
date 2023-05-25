@@ -1,6 +1,7 @@
 package com.m2r.codegen.parser.templatedef;
 
 import com.m2r.codegen.parser.templatedef.actions.ActionState;
+import com.m2r.codegen.parser.templatedef.actions.LogicalOperator;
 import com.m2r.codegen.parser.templatedefold.Block;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,8 +112,19 @@ public class Method {
         if (definedMethod == null) {
             throw new RuntimeException("Method '" + name + "' undefined!");
         }
-        ActionState state = ActionState.create(this, index, size);
-        definedMethod.getAction().process(state);
+        ActionState newState = ActionState.create(this, index, size);
+        definedMethod.getAction().process(newState);
+    }
+
+    public void process(ActionState state) throws Exception {
+        DefinedMethod definedMethod = DefinedMethod.findDefinedMethod(name);
+        if (definedMethod == null) {
+            throw new RuntimeException("Method '" + name + "' undefined!");
+        }
+        ActionState newState = ActionState.create(this, state.getIndex(), state.getSize());
+        newState.updateLogicStatusFrom(state);
+        definedMethod.getAction().process(newState);
+        state.updateLogicStatusFrom(newState);
     }
 
     public void backupBlock() {

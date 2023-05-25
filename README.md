@@ -311,13 +311,13 @@ template {
 
 | Command       | Description                                                  | Parameters                                                                               |
 |---------------|--------------------------------------------------------------|------------------------------------------------------------------------------------------|
+| **block**     | Defines a bock of line(s) to be processed in the file        | - startLine<br/>- endLine<br/>- logicalOperator - AND (default), OR and XOR              |
 | **replace**   | Replace parts of a block's content                           | - oldText (regex/text)<br/>- newText                                                     |
 | **replaceIf** | Replace parts of a block's content based on a condition      | - oldText (regex/text)<br/>- newText<br/>- method<br/>- value<br/>- elseValue (optional) |
 | **iterate**   | Iterates over a collection (domains or attributes)           | - collection<br/>- itemVar                                                               |
 | **showIf**    | Display the content of a block (or not) based on a condition | - method<br/>- attribute (optional)<br/>- value                                          |
 | **delimiter** | In an iterator include prefix, divisor or suffix             | - prefix<br/>- divider<br/>- suffix                                                      |
 | **mask**      | Apply a mask to the replace value                            | - value                                                                                  |
-
 
 #### Generated file
 
