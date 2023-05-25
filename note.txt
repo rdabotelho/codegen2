@@ -1,7 +1,3 @@
 # RELEASE NEWS
 
-1. New dynamics methods
- - remove* (Space, Dot, Slash, Underscore, Dash)
- - convert*To* (Space, Dot, Slash, Underscore, Dash)
-2. Standalone version for Macos and Linux (GraalVM)
-3. Option properties file to init command
+1. Included logical operator in block
