@@ -94,7 +94,7 @@ public class TemplateParser extends Parser<TemplateProcess> {
             int startLine = method.getBlock().getLineStart();
             int endLine = method.getBlock().getLineEnd();
             if (currentLine < startLine) {
-                Method startMethod = Method.createBorder(parentMethod, currentLine, startLine - 1);
+                Method startMethod = Method.createBorder(parentMethod, currentLine, startLine - 1,  method.getBlock().getLogicalOperator());
                 List<String> subLines = getLines(lines, startMethod.getBlock(), offset);
                 startMethod.getBlock().setContent(Content.of(subLines));
                 parentMethod.getMethods().add(startMethod);
@@ -103,7 +103,7 @@ public class TemplateParser extends Parser<TemplateProcess> {
             method.getBlock().setContent(Content.of(subLines));
             addBlockMethodContent(method, startLine, subLines);
             if (method.getName().equals("iterate")) {
-                Method middle = Method.createBorder(method, method.getBlock().getLineStart(), method.getBlock().getLineEnd());
+                Method middle = Method.createBorder(method, method.getBlock().getLineStart(), method.getBlock().getLineEnd(), method.getBlock().getLogicalOperator());
                 middle.getBlock().getContent().substitute(method.getBlock().getContent());
                 method.getMethods().forEach(m -> {
                     middle.getMethods().add(m);
@@ -122,7 +122,7 @@ public class TemplateParser extends Parser<TemplateProcess> {
             parentMethod.getBlock().setContent(Content.of(lines));
         }
         if (currentLine <= parentMethod.getBlock().getLineEnd()) {
-            Method endMethod = Method.createBorder(parentMethod, currentLine, parentMethod.getBlock().getLineEnd());
+            Method endMethod = Method.createBorder(parentMethod, currentLine, parentMethod.getBlock().getLineEnd(),  parentMethod.getBlock().getLogicalOperator());
             List<String> subLines = getLines(lines, endMethod.getBlock(), offset);
             endMethod.getBlock().setContent(Content.of(subLines));
             parentMethod.getMethods().add(endMethod);
