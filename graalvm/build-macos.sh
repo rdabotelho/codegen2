@@ -2,10 +2,10 @@
 
 # ATENTION
 # Before everything, execute the follow command to generate a reflect-config.json file
-# java -agentlib:native-image-agent=config-output-dir=graalvm -jar target/codegen-2.1.1-jar-with-dependencies.jar
+# java -agentlib:native-image-agent=config-output-dir=graalvm -jar target/codegen-2.1.2-jar-with-dependencies.jar
 
 ARTIFACT=codegen
-VERSION=2.1.1
+VERSION=2.1.2
 
 INPUT_DIR=$(pwd)/input
 OUTPUT_DIR=$(pwd)/output

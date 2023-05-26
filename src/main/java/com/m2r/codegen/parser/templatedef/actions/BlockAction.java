@@ -17,16 +17,6 @@ public class BlockAction implements MethodAction {
     @Override
     public void process(ActionState state) throws Exception {
         Method method = state.getMethod();
-        LogicalOperator logicalOperator = LogicalOperator.AND;
-        if (method.getParameters().size() >= 3) {
-            String operator = method.getParameter(2).getValue();
-            logicalOperator = LogicalOperator.of(operator);
-        }
-        int showIfCount = method.getMethods().stream()
-                .filter(it -> it.getName().equals("showIf"))
-                .collect(Collectors.toList()).size();
-        state.setLogicalOperator(logicalOperator, showIfCount);
-        state.setLogicState(LogicalOperator.AND.equals(logicalOperator));
         method.getMethods().stream().filter(it -> it.isBlock()).forEach(it -> {
             it.restoreBlock();
             it.backupBlock();
