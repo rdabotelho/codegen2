@@ -14,6 +14,8 @@ public class Method {
     private List<Method> methods = new ArrayList<>();
     private int pos;
 
+    private boolean logicState = true;
+
     private Method(Method parent, String name) {
         this.parent = parent;
         this.name = name;
@@ -30,10 +32,11 @@ public class Method {
         return method;
     }
 
-    public static Method createBorder(Method parent, Integer startLine, Integer endLine) {
+    public static Method createBorder(Method parent, Integer startLine, Integer endLine, LogicalOperator logicalOperator) {
         Method method = Method.create(parent, "block");
         method.getParameters().add(new Param(startLine.toString()));
         method.getParameters().add(new Param(endLine.toString()));
+        method.getParameters().add(new Param(logicalOperator.name()));
         method.setBlock(Block.create(method));
         return method;
     }
@@ -70,6 +73,14 @@ public class Method {
 
     public void setPos(int pos) {
         this.pos = pos;
+    }
+
+    public void setLogicState(boolean logicState) {
+        this.logicState = logicState;
+    }
+
+    public boolean isLogicState() {
+        return logicState;
     }
 
     public Param getParameter(int index) {
@@ -122,9 +133,7 @@ public class Method {
             throw new RuntimeException("Method '" + name + "' undefined!");
         }
         ActionState newState = ActionState.create(this, state.getIndex(), state.getSize());
-        newState.updateLogicStatusFrom(state);
         definedMethod.getAction().process(newState);
-        state.updateLogicStatusFrom(newState);
     }
 
     public void backupBlock() {
