@@ -7,7 +7,7 @@ INFO="Installation\n\n
 4. Run the following command: codegen -v\n\n
 If everything has been done correctly, you will see the following output:\n\n
 Codegen command line interface (CLI)\n
-Version: 2.1.2-SNAPSHOT\n"
+Version: 2.1.2\n"
 
 # Linux
 cd output
