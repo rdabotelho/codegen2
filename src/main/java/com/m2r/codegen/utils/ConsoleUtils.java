@@ -1,8 +1,6 @@
 package com.m2r.codegen.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class ConsoleUtils {
 
@@ -22,15 +20,27 @@ public class ConsoleUtils {
         printError("Codegen project uninitialized!\nUse: codegen init");
     }
 
+    public static String printAndReadOption(String msg, String def) {
+        return readLine(msg, def);
+    }
+
     public static String printAndReadOption(String msg) {
-        return readLine(msg);
+        return readLine(msg, null);
     }
 
     public static String readLine(String msg) {
+        return readLine(msg, null);
+    }
+
+    public static String readLine(String msg, String def) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String name = null;
         try {
-            System.out.print("\u001B[92m?\u001B[33m " + msg + ": \u001B[0m");
+            if (def != null) {
+                System.out.print("\u001B[92m?\u001B[33m " + msg + "\u001B[0m \u001B[90m(" + def + "): \u001B[0m");
+            }
+            else {
+                System.out.print("\u001B[92m?\u001B[33m " + msg + ": \u001B[0m");
+            }
             return reader.readLine();
         }
         catch (IOException e) {

@@ -8,6 +8,7 @@ import com.m2r.codegen.parser.templatedef.TemplateDefParser;
 import com.m2r.codegen.parser.templatedefold.TemplateProcess;
 import com.m2r.codegen.utils.ConsoleUtils;
 import com.m2r.codegen.utils.DirFileUtils;
+import com.m2r.codegen.utils.PropertiesManager;
 import com.m2r.codegen.utils.TemplateRepo;
 import org.apache.commons.io.FileUtils;
 import picocli.CommandLine;
@@ -62,18 +63,58 @@ public class InitCommand implements Runnable {
             if (isEmpty) {
                 FileUtils.cleanDirectory(DirFileUtils.getHomeDir());
                 cloneCodegenProject();
-                Properties configProperties = new Properties();
-                File targetConfigFile = new File(DirFileUtils.getCodegenDir(), "config.properties");
-                File configFile = userPropertiesFile != null ? userPropertiesFile : targetConfigFile;
-                configProperties.load(new FileInputStream(configFile));
+
+                File configFile = null;
+                if (userPropertiesFile != null) {
+                    configFile = userPropertiesFile;
+                }
+                else {
+                    configFile = DirFileUtils.getConfigProperties();
+                    if (!configFile.exists()) {
+                        configFile = new File(DirFileUtils.getCodegenDir(), "config.yaml");
+                    }
+                    if (!configFile.exists()) {
+                        configFile = new File(DirFileUtils.getCodegenDir(), "config.yml");
+                    }
+                }
+
+                PropertiesManager propertiesManager = new PropertiesManager();
+                if (configFile.exists()) {
+                    propertiesManager.load(configFile);
+                }
+
                 if (userPropertiesFile == null) {
-                    configProperties.forEach((key, value) -> {
-                        String def = value != null && !value.equals("") ? " [" + value + "]" : "";
-                        String newValue = ConsoleUtils.printAndReadOption( key + def);
-                        configProperties.put(key, newValue.isEmpty() ? value : newValue);
+                    propertiesManager.getProperties().stream().forEach(property -> {
+                        while (true) {
+                            String def = property.getValue();
+                            String newValue = ConsoleUtils.printAndReadOption(property.getLabel(), def);
+                            if (!newValue.isBlank()) {
+                                if (property.getRegex() != null && !property.getRegex().isBlank()) {
+                                    boolean valid = newValue.matches(property.getRegex());
+                                    if (!valid) {
+                                        ConsoleUtils.printError(property.getLabel() + " invalid!");
+                                        continue;
+                                    }
+                                }
+                                property.setValue(newValue);
+                                break;
+                            }
+                            else {
+                                if (def != null && !def.isBlank()) {
+                                    property.setValue(def);
+                                    break;
+                                }
+                                else if (property.isRequired()) {
+                                    ConsoleUtils.printError(property.getLabel() + " is required!");
+                                    continue;
+                                }
+                            }
+                        }
                     });
                 }
-                configProperties.store(new FileOutputStream(targetConfigFile), null);
+
+                propertiesManager.store();
+
                 templatesProcessed.clear();
                 copyBaseFilesToHome(DirFileUtils.getTempDir(), DirFileUtils.getHomeDir());
                 removeAllEmptyDirs();
