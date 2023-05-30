@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ARTIFACT=codegen
-VERSION=2.1.2
+VERSION=2.1.3
 
 INPUT_DIR=$(pwd)/input
 OUTPUT_DIR=$(pwd)/output
