@@ -21,6 +21,10 @@ public class DirFileUtils {
         return CODEGEN_DIR;
     }
 
+    public static File getConfigProperties() {
+        return new File(getCodegenDir(), "config.properties");
+    }
+
     public static File getTempDir() {
         return TEMP_DIR;
     }
