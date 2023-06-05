@@ -98,7 +98,7 @@ template {
 
 To install codegen 2.0, you need to download the `codegen.zip` file in the link below and follow the next steps (for each OS).
 
-[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.1.3)
+[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.1.4-SNAPSHOT)
 
 #### macOS / Linux
 
@@ -111,7 +111,7 @@ export PATH=$PATH:~/codegen
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.1.3
+Version: 2.1.4-SNAPSHOT
 ```
 
 #### Windows
@@ -121,7 +121,7 @@ Version: 2.1.3
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.1.3
+Version: 2.1.4-SNAPSHOT
 ```
 
 ## Usage
@@ -218,13 +218,13 @@ public class HelloWorld {
 
 The following is a list of the commands available in the codegen CLI.
 
-| Command             | Description                                                        | Parameters                                                                       | Options                                 |
-|---------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------|-----------------------------------------|
-| **init**            | Initialize a codegen project                                       | - git url (optional)<br/>- git branch (optional)                                 | **-p or --properties:** Properties file |
-| **create-template** | Create a new template file and template definition file            | - template file name                                                             |                                         |
-| **create-model**    | Create a new modeling file                                         | - model file name                                                                |                                         |
-| **shift**           | Shift blocks' lines automatically in the template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse      |
-| **generate**        | Generate files based on templates                                  | - model file name                                                                | **-f or --force:** Force override       |
+| Command             | Description                                                        | Parameters                                                                       | Options                                                                   |
+|---------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| **init**            | Initialize a codegen project                                       | - git url (optional)<br/>- git branch (optional)                                 | **-p or --properties:** Properties file                                   |
+| **create-template** | Create a new template file and template definition file            | - template file name                                                             |                                                                           |
+| **create-model**    | Create a new modeling file                                         | - model file name                                                                |                                                                           |
+| **shift**           | Shift blocks' lines automatically in the template definition files | - template definition file name<br/>- started line<br/>- total of lines to shift | **-r or --reverse:** Shift reverse                                        |
+| **generate**        | Generate files based on templates                                  | - model file name                                                                | **-f or --force:** Force override<br/>**-t or --tag:** Tag for generation |
 
 ## Codegen Engine
 
@@ -278,7 +278,8 @@ To create the template definition file, the codegen provides its own DSL where t
 template {
     sourceFile: 'template-file-name'
     targetFile: 'target-file-name'
-    scope: 'domain-type'
+    scope: 'singleton,entity,enum'
+    tags: 'tag1,tag2,...' (optional)
     block(start-line, end-line) {
         replace('old-value', new-value)
         showIf(object, method, param1, param2, ...)
