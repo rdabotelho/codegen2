@@ -14,6 +14,7 @@ import com.m2r.mdsl.parser.ModelParser;
 import picocli.CommandLine;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @CommandLine.Command(name = "generate")
@@ -24,6 +25,9 @@ public class GenerateCommand implements Runnable {
 
     @CommandLine.Option(names = {"-f", "--force"}, description = "Force override")
     boolean force;
+
+    @CommandLine.Option(names = {"-t", "--tag"}, description = "Tag for generation")
+    private String tag;
 
     @Override
     public void run() {
@@ -73,6 +77,19 @@ public class GenerateCommand implements Runnable {
         Attribute targetFile = templateDef.getAttributeByName("targetFile");
         if (targetFile == null)
             throw new RuntimeException("targetFile attribute required!");
+
+        if (tag != null) {
+            boolean hasWithTag = false;
+            Attribute attrTags = templateDef.getAttributeByName("tags");
+            if (attrTags != null) {
+                String[] tags = attrTags.getValue().split("\\,");
+                String found = Arrays.stream(tags).filter(it -> it.equals(tag)).findFirst().orElse(null);
+                hasWithTag = found != null;
+            }
+            if (!hasWithTag) {
+                return;
+            }
+        }
 
         // Scope singleton
         if (templateDef.scope("singleton")) {
