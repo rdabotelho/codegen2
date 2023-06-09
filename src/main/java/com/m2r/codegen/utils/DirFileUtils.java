@@ -6,10 +6,14 @@ import java.util.UUID;
 
 public class DirFileUtils {
 
+    public static final String CODEGEN_FOLDER = ".codegen";
+
+    public static final String GIT_FOLDER = ".git";
+
     //private static File HOME_DIR = new File(System.getProperty("user.dir")+"/temp");
     private static File HOME_DIR = new File(System.getProperty("user.dir"));
 
-    private static File CODEGEN_DIR = new File(HOME_DIR, ".codegen");
+    private static File CODEGEN_DIR = new File(HOME_DIR, CODEGEN_FOLDER);
 
     private static File TEMP_DIR = new File(System.getProperty("java.io.tmpdir"), UUID.randomUUID().toString());
 
