@@ -98,7 +98,7 @@ template {
 
 To install codegen 2.0, you need to download the `codegen.zip` file in the link below and follow the next steps (for each OS).
 
-[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.1.5-SNAPSHOT)
+[![Latest Release](latest-release.svg)](https://github.com/rdabotelho/codegen2/releases/tag/v2.1.5)
 
 #### macOS / Linux
 
@@ -111,7 +111,7 @@ export PATH=$PATH:~/codegen
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.1.5-SNAPSHOT
+Version: 2.1.5
 ```
 
 #### Windows
@@ -121,7 +121,7 @@ Version: 2.1.5-SNAPSHOT
 3. Run the following command `codegen -v`, if everything has been done correctly, you will see the following output:
 ```shell
 Codegen command line interface (CLI)
-Version: 2.1.5-SNAPSHOT
+Version: 2.1.5
 ```
 
 ## Usage
