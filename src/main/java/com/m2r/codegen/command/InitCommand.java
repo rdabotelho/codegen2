@@ -152,7 +152,7 @@ public class InitCommand implements Runnable {
         File[] files = sourceDir.listFiles();
         Arrays.sort(files, (a, b) -> isDefinitionFile(a) ? -1 : 0);
         for (File source : files) {
-            if (source.isHidden()) {
+            if (source.getName().equals(DirFileUtils.CODEGEN_FOLDER) || source.getName().equals(DirFileUtils.GIT_FOLDER)) {
                 continue;
             }
             if (isDefinitionFile(source)) {
